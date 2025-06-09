@@ -11,7 +11,12 @@ return [
     | various messages that we need to display to the user. You are free to
     | modify these language lines according to your application's requirements.
     |
-    */
+    */    // Application
+    'name' => 'Tên ứng dụng',
+    'app_name' => 'Tên ứng dụng',
+    'email' => 'Email',
+    'password' => 'Mật khẩu',
+    'confirm_password' => 'Xác nhận mật khẩu ádasd',
 
     // Navigation & Menu
     'dashboard' => 'Bảng điều khiển',
@@ -121,9 +126,7 @@ return [
     'access_denied' => 'Truy cập bị từ chối',
     'session_expired' => 'Phiên làm việc đã hết hạn',
     'try_again' => 'Thử lại',
-    'contact_admin' => 'Liên hệ quản trị viên',
-
-    // Profile
+    'contact_admin' => 'Liên hệ quản trị viên',    // Profile
     'profile_information' => 'Thông tin hồ sơ',
     'update_profile' => 'Cập nhật hồ sơ',
     'change_password' => 'Đổi mật khẩu',
@@ -132,6 +135,29 @@ return [
     'confirm_password' => 'Xác nhận mật khẩu',
     'password_updated' => 'Mật khẩu đã được cập nhật',
     'profile_updated' => 'Hồ sơ đã được cập nhật',
+
+    // Authentication & Account
+    'already_have_account' => 'Đã có tài khoản?',
+    'dont_have_account' => 'Chưa có tài khoản?',
+    'create_account' => 'Tạo tài khoản',
+    'forgot_password' => 'Quên mật khẩu?',
+    'reset_password' => 'Đặt lại mật khẩu',
+    'remember_me' => 'Ghi nhớ đăng nhập',
+    'sign_in' => 'Đăng nhập',
+    'sign_up' => 'Đăng ký',
+    'sign_out' => 'Đăng xuất',
+    'welcome_back' => 'Chào mừng bạn trở lại',
+    'create_new_account' => 'Tạo tài khoản mới',
+    'login_successful' => 'Đăng nhập thành công',
+    'logout_successful' => 'Đăng xuất thành công',
+    'registration_successful' => 'Đăng ký thành công',
+    'invalid_credentials' => 'Thông tin đăng nhập không chính xác',
+    'account_locked' => 'Tài khoản đã bị khóa',
+    'account_suspended' => 'Tài khoản đã bị tạm ngưng',
+    'email_verification_required' => 'Cần xác thực email',
+    'email_verified' => 'Email đã được xác thực',
+    'verify_email' => 'Xác thực email',
+    'resend_verification' => 'Gửi lại email xác thực',
 
     // Các trường form
     'name' => 'Tên',
@@ -163,12 +189,40 @@ return [
     'size' => 'Kích cỡ',
     'unit' => 'Đơn vị',
     'supplier' => 'Nhà cung cấp',
-    'customer' => 'Khách hàng',
-    'warehouse' => 'Kho',
+    'customer' => 'Khách hàng',    'warehouse' => 'Kho',
     'location' => 'Vị trí',
     'rack' => 'Giá',
     'shelf' => 'Kệ',
     'bin' => 'Ngăn',
+
+    // User & Account Fields
+    'username' => 'Tên người dùng',
+    'full_name' => 'Họ và tên',
+    'first_name' => 'Tên',
+    'last_name' => 'Họ',
+    'middle_name' => 'Tên đệm',
+    'gender' => 'Giới tính',
+    'male' => 'Nam',
+    'female' => 'Nữ',
+    'other' => 'Khác',
+    'date_of_birth' => 'Ngày sinh',
+    'age' => 'Tuổi',
+    'nationality' => 'Quốc tịch',
+    'id_number' => 'Số CMND/CCCD',
+    'passport' => 'Số hộ chiếu',
+
+    // Validation & Errors
+    'field_required' => 'Trường này là bắt buộc',
+    'invalid_email' => 'Email không hợp lệ',
+    'password_min_length' => 'Mật khẩu phải có ít nhất 8 ký tự',
+    'passwords_not_match' => 'Mật khẩu xác nhận không khớp',
+    'invalid_phone' => 'Số điện thoại không hợp lệ',
+    'invalid_format' => 'Định dạng không hợp lệ',
+    'value_too_long' => 'Giá trị quá dài',
+    'value_too_short' => 'Giá trị quá ngắn',
+    'please_select' => 'Vui lòng chọn',
+    'please_enter' => 'Vui lòng nhập',
+    'select_option' => 'Chọn tùy chọn',
 
     // Time & Date
     'today' => 'Hôm nay',
@@ -220,7 +274,56 @@ return [
     '404_error' => 'Lỗi 404',
     '500_error' => 'Lỗi 500',
     'server_error' => 'Lỗi máy chủ',
-    'network_error' => 'Lỗi mạng',
-    'connection_error' => 'Lỗi kết nối',
+    'network_error' => 'Lỗi mạng',    'connection_error' => 'Lỗi kết nối',
+
+    // Business & Operations
+    'inventory' => 'Tồn kho',
+    'stock' => 'Hàng tồn',
+    'stock_level' => 'Mức tồn kho',
+    'reorder_level' => 'Mức đặt hàng lại',
+    'minimum_stock' => 'Tồn kho tối thiểu',
+    'maximum_stock' => 'Tồn kho tối đa',
+    'purchase_order' => 'Đơn đặt hàng',
+    'sales_order' => 'Đơn bán hàng',
+    'transfer' => 'Chuyển kho',
+    'receipt' => 'Phiếu nhập',
+    'issue' => 'Phiếu xuất',
+    'adjustment' => 'Điều chỉnh',
+    'audit' => 'Kiểm kê',
+    'report' => 'Báo cáo',
+    'reports' => 'Báo cáo',
+
+    // Additional Common Terms
+    'all' => 'Tất cả',
+    'none' => 'Không có',
+    'yes' => 'Có',
+    'no' => 'Không',
+    'true' => 'Đúng',
+    'false' => 'Sai',
+    'on' => 'Bật',
+    'off' => 'Tắt',
+    'public' => 'Công khai',
+    'private' => 'Riêng tư',
+    'draft' => 'Bản nháp',
+    'published' => 'Đã xuất bản',
+    'archived' => 'Đã lưu trữ',
+    'featured' => 'Nổi bật',
+    'popular' => 'Phổ biến',
+    'new' => 'Mới',
+    'old' => 'Cũ',
+    'latest' => 'Mới nhất',
+    'oldest' => 'Cũ nhất',
+    'first' => 'Đầu tiên',
+    'last' => 'Cuối cùng',
+    'high' => 'Cao',
+    'medium' => 'Trung bình',
+    'low' => 'Thấp',
+    'urgent' => 'Khẩn cấp',    'normal' => 'Bình thường',
+    'priority' => 'Ưu tiên',
+
+    // Additional navigation items
+    'auto_generation' => 'Tự động tạo',
+    'purchase_orders' => 'Nhập hàng',
+    'import_goods' => 'Nhập hàng',
 
 ];
