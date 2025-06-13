@@ -45,4 +45,67 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Create a new product
+     */
+    public function createProduct(array $productData): void
+    {
+        Product::create($productData);
+    }
+
+    /**
+     * Get a product by ID
+     */
+    public function getProduct(int $productId): ?Product
+    {
+        return Product::find($productId);
+    }
+
+    /**
+     * Update a product
+     */
+    public function updateProduct(int $productId, array $data): void
+    {
+        $product = Product::find($productId);
+        if ($product) {
+            $product->update($data);
+        }
+    }
+
+    /**
+     * Delete a product
+     */
+    public function deleteProduct(int $productId): void
+    {
+        $product = Product::find($productId);
+        if ($product) {
+            $product->delete();
+        }
+    }
+
+    /**
+     * Get all warehouses
+     */
+    public function getWarehouses(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Warehouse::all();
+    }
+
+    /**
+     * Transfer product to store
+     */
+    public function transferToStore(int $productId, int $warehouseId, int $quantity): bool
+    {
+        $inventory = Inventory::where([
+            'product_id' => $productId,
+            'warehouse_id' => $warehouseId
+        ])->first();
+
+        if ($inventory && $inventory->quantity >= $quantity) {
+            return $inventory->transferToStore($quantity);
+        }
+
+        return false;
+    }
 }

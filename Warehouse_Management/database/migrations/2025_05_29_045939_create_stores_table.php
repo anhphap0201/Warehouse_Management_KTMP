@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            // Core fields according to class diagram
+            $table->id();                              // bigint
+            $table->string('name');                    // string (required)
+            $table->string('location');                // string (required)
+            $table->timestamps();                      // created_at, updated_at
+            
+            // Additional fields for extended functionality (backward compatibility)
             $table->string('code')->unique();
-            $table->string('location')->nullable();
             $table->text('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
@@ -26,7 +30,6 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->text('description')->nullable();
             $table->json('operating_hours')->nullable(); // Giờ hoạt động
-            $table->timestamps();
             
             // Index cho performance
             $table->index(['code', 'status']);

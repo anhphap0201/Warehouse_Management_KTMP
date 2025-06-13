@@ -80,11 +80,12 @@
 
                         <div>
                             <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Danh mục
+                                Danh mục <span class="text-red-500">*</span>
                             </label>
                             <select name="category_id" 
                                     id="category_id" 
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100">
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100"
+                                    required>
                                 <option value="">Chọn danh mục</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" 
@@ -100,14 +101,15 @@
 
                         <div>
                             <label for="unit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Đơn vị tính
+                                Đơn vị tính <span class="text-red-500">*</span>
                             </label>
                             <input type="text" 
                                    name="unit" 
                                    id="unit" 
                                    value="{{ old('unit', $product->unit) }}" 
                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100" 
-                                   placeholder="VD: Cái, Kg, Hộp, Gói...">
+                                   placeholder="VD: Cái, Kg, Hộp, Gói..."
+                                   required>
                             @error('unit')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror

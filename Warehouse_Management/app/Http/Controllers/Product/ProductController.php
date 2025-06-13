@@ -34,13 +34,19 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'sku' => 'required|string|max:100|unique:products',
-            'category_id' => 'nullable|exists:categories,id',
-            'unit' => 'nullable|string|max:50',
+            'sku' => 'required|string|max:255|unique:products',
+            'category_id' => 'required|exists:categories,id',
+            'unit' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        Product::create($request->all());
+        Product::create([
+            'name' => $request->name,
+            'sku' => $request->sku,
+            'category_id' => $request->category_id,
+            'unit' => $request->unit,
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('products.index')
             ->with('success', 'Sản phẩm đã được tạo thành công!');
@@ -71,13 +77,19 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'sku' => 'required|string|max:100|unique:products,sku,' . $product->id,
-            'category_id' => 'nullable|exists:categories,id',
-            'unit' => 'nullable|string|max:50',
+            'sku' => 'required|string|max:255|unique:products,sku,' . $product->id,
+            'category_id' => 'required|exists:categories,id',
+            'unit' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $product->update($request->all());
+        $product->update([
+            'name' => $request->name,
+            'sku' => $request->sku,
+            'category_id' => $request->category_id,
+            'unit' => $request->unit,
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('products.index')
             ->with('success', 'Sản phẩm đã được cập nhật thành công!');
@@ -105,7 +117,7 @@ class ProductController extends Controller
      */
     public function getProduct($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('category')->find($id);
         
         if (!$product) {
             return response()->json(['error' => 'Product not found'], 404);
@@ -115,7 +127,12 @@ class ProductController extends Controller
             'id' => $product->id,
             'name' => $product->name,
             'sku' => $product->sku,
-            'unit' => $product->unit
+            'category_id' => $product->category_id,
+            'category_name' => $product->category ? $product->category->name : null,
+            'unit' => $product->unit,
+            'description' => $product->description,
+            'created_at' => $product->created_at,
+            'updated_at' => $product->updated_at,
         ]);
     }
 }

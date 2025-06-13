@@ -7,6 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Product Model - Matches Class Diagram Requirements
+ * 
+ * Fields according to class diagram:
+ * - id : bigint (primary key, auto-increment)
+ * - name : string (required)
+ * - sku : string (required, unique)
+ * - category_id : bigint (required, foreign key to categories table)
+ * - unit : string (required)
+ * - description : text (nullable)
+ * - created_at : timestamp (auto-managed by Laravel)
+ * - updated_at : timestamp (auto-managed by Laravel)
+ */
+
 class Product extends Model
 {
     use HasFactory;
@@ -17,6 +31,13 @@ class Product extends Model
         'category_id',
         'unit',
         'description',
+    ];
+
+    protected $casts = [
+        'id' => 'integer',
+        'category_id' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
@@ -49,5 +70,41 @@ class Product extends Model
     public function getTotalQuantityAttribute(): int
     {
         return $this->inventory->sum('quantity');
+    }
+
+    /**
+     * Lấy các biến động tồn kho cho sản phẩm.
+     */
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class);
+    }
+
+    /**
+     * Validation rules for Product model
+     */
+    public static function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'sku' => 'required|string|max:255|unique:products,sku',
+            'category_id' => 'required|exists:categories,id',
+            'unit' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ];
+    }
+
+    /**
+     * Validation rules for updating Product
+     */
+    public static function updateRules($id)
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'sku' => 'required|string|max:255|unique:products,sku,' . $id,
+            'category_id' => 'required|exists:categories,id',
+            'unit' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ];
     }
 }
