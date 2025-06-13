@@ -1,42 +1,59 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Chỉnh sửa hóa đơn nhập kho #{{ $purchaseOrder->invoice_number }}
             </h2>
-            <a href="{{ route('purchase-orders.show', $purchaseOrder) }}" 
-               class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
-                Quay lại
-            </a>
+            <div class="flex space-x-2">
+                <a href="{{ route('purchase-orders.show', $purchaseOrder) }}" 
+                   class="btn btn-secondary btn-sm">
+                    <i class="fas fa-eye mr-2"></i>
+                    Xem Chi Tiết
+                </a>
+                <a href="{{ route('purchase-orders.index') }}" 
+                   class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Quay lại
+                </a>
+            </div>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="w-9/12 mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-6">Cập nhật thông tin hóa đơn</h3>
+                    
+                    @if($errors->any())
+                        <div class="alert alert-error mb-6">
+                            <ul class="list-disc list-inside">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form action="{{ route('purchase-orders.update', $purchaseOrder) }}" method="POST" id="purchaseOrderForm">
                         @csrf
                         @method('PUT')
                         
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-grid-2">
                             <!-- Thông tin cơ bản -->
                             <div class="space-y-6">
                                 <div>
-                                    <label for="warehouse_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label for="warehouse_id" class="form-label">
                                         Kho hàng <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="text" 
                                                id="warehouse_search" 
                                                placeholder="Tìm kiếm kho hàng..."
-                                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white mb-2">
+                                               class="form-input mb-2">
                                         <select name="warehouse_id" 
                                                 id="warehouse_id" 
-                                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white @error('warehouse_id') border-red-500 @enderror" 
+                                                class="form-select @error('warehouse_id') border-red-500 @enderror" 
                                                 required>
                                             <option value="">Chọn kho hàng</option>
                                             @foreach($warehouses as $warehouse)
@@ -51,14 +68,14 @@
                                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                                     @enderror
                                 </div>                                <div>
-                                    <label for="supplier_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label for="supplier_name" class="form-label">
                                         Tên nhà cung cấp <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="text" 
                                                id="supplier_search" 
                                                placeholder="Tìm kiếm nhà cung cấp..."
-                                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white @error('supplier_name') border-red-500 @enderror"
+                                               class="form-input @error('supplier_name') is-invalid @enderror"
                                                value="{{ old('supplier_name', $purchaseOrder->supplier_name) }}"
                                                autocomplete="off">
                                         <input type="hidden" name="supplier_name" id="supplier_name" value="{{ old('supplier_name', $purchaseOrder->supplier_name) }}">
@@ -75,57 +92,59 @@
                                         </div>
                                     </div>
                                     @error('supplier_name')
-                                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <div>
-                                    <label for="supplier_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label for="supplier_phone" class="form-label">
                                         Số điện thoại
                                     </label>
                                     <input type="text" 
                                            name="supplier_phone" 
                                            id="supplier_phone" 
-                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white @error('supplier_phone') border-red-500 @enderror" 
+                                           class="form-input @error('supplier_phone') is-invalid @enderror" 
                                            value="{{ old('supplier_phone', $purchaseOrder->supplier_phone) }}">
                                     @error('supplier_phone')
-                                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
 
-                            <div class="space-y-6">                                <div>
-                                    <label for="invoice_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <div class="space-y-6">
+                                <div>
+                                    <label for="invoice_number" class="form-label">
                                         Số hóa đơn
                                     </label>
-                                    <div class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+                                    <div class="form-static-text">
                                         {{ $purchaseOrder->invoice_number }}
                                     </div>
-                                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Số hóa đơn không thể thay đổi</p>
-                                </div>                                <div>
-                                    <label for="supplier_address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <p class="form-help-text">Số hóa đơn không thể thay đổi</p>
+                                </div>
+                                <div>
+                                    <label for="supplier_address" class="form-label">
                                         Địa chỉ nhà cung cấp
                                     </label>
                                     <textarea name="supplier_address" 
                                               id="supplier_address" 
                                               rows="3"
                                               placeholder="Nhập địa chỉ nhà cung cấp..."
-                                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white @error('supplier_address') border-red-500 @enderror">{{ old('supplier_address', $purchaseOrder->supplier_address) }}</textarea>
+                                              class="form-textarea @error('supplier_address') is-invalid @enderror">{{ old('supplier_address', $purchaseOrder->supplier_address) }}</textarea>
                                     @error('supplier_address')
-                                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <div>
-                                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label for="notes" class="form-label">
                                         Ghi chú
                                     </label>
                                     <textarea name="notes" 
                                               id="notes" 
                                               rows="2"
-                                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white @error('notes') border-red-500 @enderror">{{ old('notes', $purchaseOrder->notes) }}</textarea>
+                                              class="form-textarea @error('notes') is-invalid @enderror">{{ old('notes', $purchaseOrder->notes) }}</textarea>
                                     @error('notes')
-                                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -137,11 +156,9 @@
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Chi tiết sản phẩm</h3>
                                     <button type="button" 
-                                            class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" 
+                                            class="btn btn-success btn-sm" 
                                             id="addItemBtn">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                        </svg>
+                                        <i class="fas fa-plus mr-2"></i>
                                         Thêm sản phẩm
                                     </button>
                                 </div>
@@ -187,10 +204,8 @@
 
                             <div class="flex justify-end">
                                 <button type="submit" 
-                                        class="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
-                                    </svg>
+                                        class="btn btn-primary">
+                                    <i class="fas fa-save mr-2"></i>
                                     Cập nhật hóa đơn
                                 </button>
                             </div>

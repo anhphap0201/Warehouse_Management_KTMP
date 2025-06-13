@@ -4,7 +4,7 @@
                 {{ __('Quản lý Cửa hàng') }}
             </h2>
             <a href="{{ route('stores.create') }}" 
-               class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg touch-target">
+               class="btn-add-new inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg touch-target">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
@@ -14,7 +14,7 @@
     </x-slot>
 
     <div class="py-4 sm:py-6">
-        <div class="container-70">
+        <div class="container-modern">
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
                     {{ session('success') }}
@@ -28,42 +28,15 @@
             @endif
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 sm:p-6 text-gray-900 dark:text-gray-100">                    @if($stores->count() > 0)
-                        <!-- Search Section -->
-                        <x-form-section class="mb-6">
-                            <x-text-input 
-                                id="searchInput"
-                                type="text"
-                                placeholder="Tìm kiếm cửa hàng theo tên, địa chỉ, SĐT hoặc quản lý..."
-                                class="w-full"
-                                icon="search" />
-                            
-                            <!-- Search Results Summary -->
-                            <div id="searchResults" class="hidden mt-2 text-sm text-gray-600 dark:text-gray-400">
-                                <span id="searchResultsText"></span>
-                            </div>
-                        </x-form-section>                        
-                        <!-- Empty Search State -->
-                        <div id="emptySearchState" class="hidden text-center py-12">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">Không tìm thấy cửa hàng nào</h3>
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Không có cửa hàng nào khớp với từ khóa tìm kiếm. Hãy thử từ khóa khác.</p>
-                        </div>
-
+                <div class="p-4 sm:p-6 text-gray-900 dark:text-gray-100">
+                    @if($stores->count() > 0)
                         <!-- Stores Table -->
                         <x-table 
                             :headers="['Tên Cửa hàng', 'Địa chỉ', 'Số điện thoại', 'Quản lý', 'Trạng thái', 'Hành động']"
                             :mobileCards="true"
                             class="min-w-full">
                             @foreach($stores as $store)
-                                <tr class="store-row hover:bg-gray-50 dark:hover:bg-gray-700" 
-                                    data-name="{{ strtolower($store->name) }}"
-                                    data-location="{{ strtolower($store->location ?? '') }}"
-                                    data-phone="{{ strtolower($store->phone ?? '') }}"
-                                    data-manager="{{ strtolower($store->manager ?? '') }}"
-                                    data-status="{{ $store->status ? 'hoạt động' : 'ngừng hoạt động' }}">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                     <td class="px-6 py-4 whitespace-nowrap" data-label="Tên Cửa hàng">
                                         <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                             {{ $store->name }}
@@ -143,7 +116,7 @@
                                     <p class="text-sm">Hãy thêm cửa hàng đầu tiên của bạn</p>
                                 </div>
                                 <a href="{{ route('stores.create') }}" 
-                                   class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg touch-target">
+                                   class="btn-add-new inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg touch-target">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                     </svg>
@@ -154,106 +127,5 @@
                     @endif
                 </div>
             </div>        </div>
-    </div>    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        const searchResultsText = document.getElementById('searchResultsText');
-        const tableContainer = document.querySelector('[data-table]'); // x-table component
-        const emptySearchState = document.getElementById('emptySearchState');
-        
-        let searchTimeout;
-        let allStoreRows = [];
-        
-        // Lưu trữ tất cả dòng cửa hàng
-        if (tableContainer) {
-            allStoreRows = Array.from(tableContainer.querySelectorAll('.store-row'));
-        }
-        
-        function updateSearchResults(query, resultCount, totalCount) {
-            if (!searchResults || !searchResultsText) return;
-            
-            if (query.trim()) {
-                searchResults.classList.remove('hidden');
-                if (resultCount === 0) {
-                    searchResultsText.textContent = `Không tìm thấy kết quả nào cho "${query}"`;
-                } else if (resultCount === totalCount) {
-                    searchResults.classList.add('hidden');
-                } else {
-                    searchResultsText.textContent = `Tìm thấy ${resultCount} trong ${totalCount} cửa hàng cho "${query}"`;
-                }
-            } else {
-                searchResults.classList.add('hidden');
-            }
-        }
-        
-        function performSearch(query) {
-            if (!tableContainer || allStoreRows.length === 0) {
-                return;
-            }
-            
-            const searchTerms = query.toLowerCase().trim().split(/\s+/).filter(term => term.length > 0);
-            let visibleCount = 0;
-            
-            if (searchTerms.length === 0) {
-                // Hiển thị tất cả dòng
-                allStoreRows.forEach(row => {
-                    row.style.display = '';
-                    visibleCount++;
-                });
-                
-                if (emptySearchState) {
-                    emptySearchState.style.display = 'none';
-                }
-                tableContainer.style.display = '';
-            } else {
-                // Lọc dòng dựa trên các từ khóa tìm kiếm
-                allStoreRows.forEach(row => {
-                    const name = row.dataset.name || '';
-                    const location = row.dataset.location || '';
-                    const phone = row.dataset.phone || '';
-                    const manager = row.dataset.manager || '';
-                    const status = row.dataset.status || '';
-                    
-                    const searchText = `${name} ${location} ${phone} ${manager} ${status}`.trim();
-                    const matches = searchTerms.every(term => searchText.includes(term));
-                    
-                    if (matches) {
-                        row.style.display = '';
-                        visibleCount++;
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-                
-                // Xử lý trạng thái rỗng
-                if (visibleCount === 0) {
-                    if (emptySearchState) {
-                        emptySearchState.style.display = '';
-                    }
-                    tableContainer.style.display = 'none';
-                } else {
-                    if (emptySearchState) {
-                        emptySearchState.style.display = 'none';
-                    }
-                    tableContainer.style.display = '';
-                }
-            }
-            
-            updateSearchResults(query, visibleCount, allStoreRows.length);
-        }
-        
-        // Xử lý sự kiện input tìm kiếm với debounce
-        if (searchInput) {
-            searchInput.addEventListener('input', function() {
-                const query = this.value;
-                
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    performSearch(query);
-                }, 300);
-            });
-        }
-    });
-    </script>
+    </div>
 </x-app-layout>

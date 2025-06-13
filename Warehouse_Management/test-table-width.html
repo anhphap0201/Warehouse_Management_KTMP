@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Table Width 70%</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Copy the compiled CSS for testing */
+        .table-responsive {
+            width: 70% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        
+        .table-card-container {
+            width: 70% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        
+        .overflow-x-auto {
+            width: 70% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        
+        /* Navigation should be normal width */
+        .sidebar-link,
+        .nav-link,
+        .btn,
+        .alert,
+        .stats-card {
+            width: auto !important;
+            margin-left: initial !important;
+            margin-right: initial !important;
+        }
+
+        @media (max-width: 639px) {
+            .table-responsive,
+            .table-card-container,
+            .overflow-x-auto {
+                width: 95% !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Test Table Width 70%</h1>
+        
+        <!-- Navigation items should be normal width -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Navigation Items (should be normal width):</h2>
+            <div class="flex space-x-4">
+                <a href="#" class="sidebar-link bg-blue-500 text-white px-4 py-2 rounded">Home</a>
+                <a href="#" class="nav-link bg-green-500 text-white px-4 py-2 rounded">Products</a>
+                <button class="btn bg-red-500 text-white px-4 py-2 rounded">Button</button>
+            </div>
+        </div>
+
+        <!-- Table should be 70% width -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Table with table-responsive class (should be 70% width):</h2>
+            <div class="table-responsive shadow-md rounded-lg border">
+                <table class="w-full text-sm text-left text-gray-700">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3">Product</th>
+                            <th class="px-6 py-3">Price</th>
+                            <th class="px-6 py-3">Stock</th>
+                            <th class="px-6 py-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b">
+                            <td class="px-6 py-4">Product 1</td>
+                            <td class="px-6 py-4">$19.99</td>
+                            <td class="px-6 py-4">100</td>
+                            <td class="px-6 py-4">Active</td>
+                        </tr>
+                        <tr class="bg-white border-b">
+                            <td class="px-6 py-4">Product 2</td>
+                            <td class="px-6 py-4">$29.99</td>
+                            <td class="px-6 py-4">50</td>
+                            <td class="px-6 py-4">Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Card with table should be 70% width -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Card with table-card-container class (should be 70% width):</h2>
+            <div class="table-card-container bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-lg font-semibold text-gray-900">Categories</h3>
+                </div>
+                <div class="p-0">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">1</td>
+                                    <td class="px-6 py-4">Electronics</td>
+                                    <td class="px-6 py-4">Edit | Delete</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overflow-x-auto div should be 70% width -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Table in overflow-x-auto div (should be 70% width):</h2>
+            <div class="overflow-x-auto bg-white rounded-lg shadow-md border">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4">John Doe</td>
+                            <td class="px-6 py-4">john@example.com</td>
+                            <td class="px-6 py-4">Admin</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Regular content should be normal width -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Regular content (should be normal width):</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p>This is regular content that should take up the normal container width, not 70%.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

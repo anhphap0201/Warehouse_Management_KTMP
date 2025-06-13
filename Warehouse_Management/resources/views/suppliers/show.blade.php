@@ -1,33 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Chi tiết nhà cung cấp') }}
-        </h2>
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Chi tiết nhà cung cấp') }}
+            </h2>
+            <div class="flex space-x-2">
+                <a href="{{ route('suppliers.edit', $supplier->id) }}" 
+                   class="btn btn-primary btn-sm">
+                    <i class="fas fa-edit mr-2"></i>
+                    Chỉnh sửa
+                </a>
+                <a href="{{ route('suppliers.index') }}" 
+                   class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Quay lại
+                </a>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
         <div class="w-9/12 mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold">Chi tiết nhà cung cấp: {{ $supplier->name }}</h3>
-                        <div class="flex space-x-2">
-                            <a href="{{ route('suppliers.edit', $supplier->id) }}" 
-                               class="inline-flex items-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium rounded-md transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                </svg>
-                                Chỉnh sửa
-                            </a>
-                            <a href="{{ route('suppliers.index') }}" 
-                               class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                                </svg>
-                                Quay lại
-                            </a>
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-6">Chi tiết nhà cung cấp: {{ $supplier->name }}</h3>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                         <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">

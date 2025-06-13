@@ -62,13 +62,10 @@ class StoreController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'manager' => 'nullable|string|max:255',
-            'status' => 'boolean',
+            'location' => 'required|string|max:255',
         ]);
 
-        $store->update($request->all());
+        $store->update($request->only(['name', 'location']));
 
         return redirect()->route('stores.index')
             ->with('success', 'Cửa hàng đã được cập nhật thành công!');

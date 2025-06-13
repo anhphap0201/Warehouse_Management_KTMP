@@ -9,7 +9,9 @@
 
 @php
     $colorClasses = [
-        'blue' => 'from-blue-500 to-blue-600',
+        'blue' => 'from-gray-500 to-gray-600',
+        'gray' => 'from-gray-500 to-gray-600',
+        'neutral' => 'from-gray-500 to-gray-600',
         'green' => 'from-green-500 to-green-600',
         'red' => 'from-red-500 to-red-600',
         'yellow' => 'from-yellow-500 to-yellow-600',
@@ -17,7 +19,7 @@
         'pink' => 'from-pink-500 to-pink-600',
         'indigo' => 'from-indigo-500 to-indigo-600',
         'orange' => 'from-orange-500 to-orange-600',
-    ][$color] ?? 'from-blue-500 to-blue-600';
+    ][$color] ?? 'from-gray-500 to-gray-600';
 @endphp
 
 <div class="bg-gradient-to-br {{ $colorClasses }} rounded-lg shadow-lg overflow-hidden text-white">

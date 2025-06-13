@@ -1,35 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Tạo hóa đơn nhập kho') }}
-        </h2>
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Tạo hóa đơn nhập kho') }}
+            </h2>
+            <div class="flex space-x-2">
+                <a href="{{ route('purchase-orders.index') }}" 
+                   class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Quay lại
+                </a>
+            </div>
+        </div>
     </x-slot>    <div class="py-12">
-        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold">Tạo hóa đơn nhập kho</h3>
-                        <a href="{{ route('purchase-orders.index') }}" 
-                           class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                            </svg>
-                            Quay lại
-                        </a>
-                    </div>
+        <div class="w-9/12 mx-auto sm:px-6 lg:px-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-6">Tạo hóa đơn nhập kho</h3>
 
                     @if(session('success'))
-                        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                        <div class="alert alert-success mb-6">
                             {{ session('success') }}
                         </div>
-                    @endif                    @if(session('error'))
-                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    @endif
+                    
+                    @if(session('error'))
+                        <div class="alert alert-error mb-6">
                             {{ session('error') }}
                         </div>
                     @endif
 
                     @if($errors->any())
-                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        <div class="alert alert-error mb-6">
                             <div class="font-bold">Có lỗi xảy ra:</div>
                             <ul class="list-disc list-inside mt-2">
                                 @foreach($errors->all() as $error)
@@ -42,19 +44,21 @@
                     <form action="{{ route('purchase-orders.store') }}" method="POST" id="purchaseOrderForm">
                         @csrf
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-grid-2">
                             <!-- Thông tin cơ bản -->
-                            <div class="space-y-4">                                <div>
-                                    <label for="warehouse_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <div class="space-y-6">
+                                <div>
+                                    <label for="warehouse_id" class="form-label">
                                         Kho hàng <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="text" 
                                                id="warehouse_search" 
                                                placeholder="Tìm kiếm kho hàng..."
-                                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 @error('warehouse_id') border-red-500 @enderror"
+                                               class="form-input mb-2"
                                                autocomplete="off">
-                                        <input type="hidden" name="warehouse_id" id="warehouse_id" value="{{ old('warehouse_id') }}">                                        <div id="warehouse_dropdown" class="absolute z-[9999] w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-2xl mt-1 max-h-60 overflow-y-auto hidden" style="z-index: 9999 !important;">
+                                        <input type="hidden" name="warehouse_id" id="warehouse_id" value="{{ old('warehouse_id') }}">
+                                        <div id="warehouse_dropdown" class="absolute z-[9999] w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-2xl mt-1 max-h-60 overflow-y-auto hidden" style="z-index: 9999 !important;">
                                             <div id="warehouse_loading" class="px-4 py-2 text-gray-500 dark:text-gray-400 text-sm hidden">
                                                 <div class="flex items-center">
                                                     <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
@@ -65,37 +69,43 @@
                                         </div>
                                     </div>
                                     @error('warehouse_id')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>                                <div>
-                                    <label for="supplier_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số điện thoại</label>
-                                    <input type="text" name="supplier_phone" id="supplier_phone" 
-                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 @error('supplier_phone') border-red-500 @enderror" 
-                                           value="{{ old('supplier_phone') }}">
-                                    @error('supplier_phone')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </div>                            <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    <label for="supplier_phone" class="form-label">Số điện thoại</label>
+                                    <input type="text" 
+                                           name="supplier_phone" 
+                                           id="supplier_phone" 
+                                           class="form-input @error('supplier_phone') is-invalid @enderror" 
+                                           value="{{ old('supplier_phone') }}">
+                                    @error('supplier_phone')
+                                        <p class="form-error">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="form-label">
                                         Số hóa đơn
                                     </label>
-                                    <div class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-gray-50 dark:bg-gray-600 text-gray-500 dark:text-gray-400 text-sm">
+                                    <div class="form-static-text">
                                         Sẽ được tự động tạo khi lưu hóa đơn
                                     </div>
-                                </div>                                <div>
-                                    <label for="supplier_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                </div>
+                                <div>
+                                    <label for="supplier_name" class="form-label">
                                         Tên nhà cung cấp <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="text" 
                                                id="supplier_search" 
                                                placeholder="Tìm kiếm nhà cung cấp..."
-                                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 @error('supplier_name') border-red-500 @enderror"
+                                               class="form-input @error('supplier_name') is-invalid @enderror"
                                                autocomplete="off">
                                         <input type="hidden" name="supplier_name" id="supplier_name" value="{{ old('supplier_name') }}">
-                                        <input type="hidden" name="supplier_id" id="supplier_id" value="{{ old('supplier_id') }}">                                        <div id="supplier_dropdown" class="absolute z-[9999] w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-2xl mt-1 max-h-60 overflow-y-auto hidden" style="z-index: 9999 !important;">
+                                        <input type="hidden" name="supplier_id" id="supplier_id" value="{{ old('supplier_id') }}">
+                                        <div id="supplier_dropdown" class="absolute z-[9999] w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-2xl mt-1 max-h-60 overflow-y-auto hidden" style="z-index: 9999 !important;">
                                             <div id="supplier_loading" class="px-4 py-2 text-gray-500 dark:text-gray-400 text-sm hidden">
                                                 <div class="flex items-center">
                                                     <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
@@ -106,26 +116,28 @@
                                         </div>
                                     </div>
                                     @error('supplier_name')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>                                <div id="supplier_address_field" style="display: none;">
-                                    <label for="supplier_address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Địa chỉ nhà cung cấp</label>
-                                    <textarea name="supplier_address" id="supplier_address" 
-                                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 @error('supplier_address') border-red-500 @enderror" 
+                                    <label for="supplier_address" class="form-label">Địa chỉ nhà cung cấp</label>
+                                    <textarea name="supplier_address" 
+                                              id="supplier_address" 
+                                              class="form-textarea @error('supplier_address') is-invalid @enderror" 
                                               rows="3"
                                               placeholder="Nhập địa chỉ nhà cung cấp...">{{ old('supplier_address') }}</textarea>
                                     @error('supplier_address')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <div>
-                                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ghi chú</label>
-                                    <textarea name="notes" id="notes" 
-                                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 @error('notes') border-red-500 @enderror" 
+                                    <label for="notes" class="form-label">Ghi chú</label>
+                                    <textarea name="notes" 
+                                              id="notes" 
+                                              class="form-textarea @error('notes') is-invalid @enderror" 
                                               rows="2">{{ old('notes') }}</textarea>
                                     @error('notes')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -138,11 +150,9 @@
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Chi tiết sản phẩm</h4>
                                 <button type="button" 
-                                        class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition-colors" 
+                                        class="btn btn-success btn-sm" 
                                         id="addItemBtn">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                    </svg>
+                                    <i class="fas fa-plus mr-2"></i>
                                     Thêm sản phẩm
                                 </button>
                             </div>                            <div class="overflow-x-auto" style="overflow: visible;">
@@ -197,10 +207,8 @@
 
                         <div class="flex justify-end">
                             <button type="submit" 
-                                    class="inline-flex items-center px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-md transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-                                </svg>
+                                    class="btn btn-primary">
+                                <i class="fas fa-save mr-2"></i>
                                 Lưu hóa đơn
                             </button>
                         </div>

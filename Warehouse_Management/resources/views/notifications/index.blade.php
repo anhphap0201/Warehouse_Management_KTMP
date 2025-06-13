@@ -5,7 +5,7 @@
     <div class="container-70">        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-200">Quản lý thông báo</h1>
             <div class="flex gap-3">
-                <button id="markAllRead" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg touch-target">
+                <button id="markAllRead" class="btn-add-new inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg touch-target">
                     <i class="fas fa-check-double mr-2"></i>Đánh dấu tất cả đã đọc
                 </button>
             </div>

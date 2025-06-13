@@ -8,10 +8,10 @@
     ][$align] ?? 'text-left';
     
     $responsiveClasses = $mobile ? '' : 'table-col-mobile-hidden';
-    $sortableClasses = $sortable ? 'cursor-pointer hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors' : '';
+    $sortableClasses = $sortable ? 'cursor-pointer hover:bg-gray-200 transition-colors' : '';
 @endphp
 
-<th scope="col" {{ $attributes->merge(['class' => "px-3 py-3 sm:px-4 sm:py-3 {$alignmentClasses} {$responsiveClasses} {$sortableClasses} text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"]) }}>
+<th scope="col" {{ $attributes->merge(['class' => "px-3 py-3 sm:px-4 sm:py-3 {$alignmentClasses} {$responsiveClasses} {$sortableClasses} text-xs font-medium text-gray-500 uppercase tracking-wider"]) }}>
     @if($sortable)
         <div class="flex items-center space-x-1">
             <span>{{ $slot }}</span>

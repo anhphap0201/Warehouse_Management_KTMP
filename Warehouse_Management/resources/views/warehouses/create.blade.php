@@ -33,40 +33,44 @@
                     <form action="{{ route('warehouses.store') }}" method="POST" class="space-y-6">
                         @csrf
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-grid-2">
                             <!-- Tên kho -->
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label for="name" class="form-label">
                                     Tên Kho Hàng <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" 
                                        value="{{ old('name') }}"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                       class="form-input @error('name') border-red-500 @enderror"
                                        placeholder="Nhập tên kho hàng" required>
+                                @error('name')
+                                    <p class="form-error">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Địa chỉ -->
                             <div>
-                                <label for="location" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label for="location" class="form-label">
                                     Địa Chỉ
                                 </label>
                                 <input type="text" name="location" id="location" 
                                        value="{{ old('location') }}"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                       class="form-input @error('location') border-red-500 @enderror"
                                        placeholder="Nhập địa chỉ kho hàng">
+                                @error('location')
+                                    <p class="form-error">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="flex items-center justify-end space-x-4">
                             <a href="{{ route('warehouses.index') }}" 
-                               class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600">
+                               class="btn btn-secondary">
                                 Hủy
                             </a>
                             <button type="submit" 
-                                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                </svg>
+                                    class="btn btn-primary">
+                                <i class="fas fa-plus mr-2"></i>
                                 Tạo Kho Hàng
                             </button>
                         </div>

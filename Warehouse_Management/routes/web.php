@@ -22,7 +22,17 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $warehouses = \App\Models\Warehouse::latest()->take(5)->get();
     $stores = \App\Models\Store::latest()->take(5)->get();
-    return view('dashboard', compact('warehouses', 'stores'));
+    
+    // Get unread notifications count for dashboard
+    $unreadNotificationsCount = cache()->remember(
+        'unread_notifications_count', 
+        now()->addMinutes(5),
+        function () {
+            return \App\Models\Notification::pending()->whereNull('read_at')->count();
+        }
+    );
+    
+    return view('dashboard', compact('warehouses', 'stores', 'unreadNotificationsCount'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Xác thực - Đơn giản hóa

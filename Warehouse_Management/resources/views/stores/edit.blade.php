@@ -1,97 +1,96 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Chỉnh sửa Cửa hàng: ') . $store->name }}
             </h2>
-            <a href="{{ route('stores.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Quay lại
-            </a>
+            <div class="flex space-x-2">
+                <a href="{{ route('stores.show', $store) }}" 
+                   class="btn btn-secondary btn-sm">
+                    <i class="fas fa-eye mr-2"></i>
+                    Xem Chi Tiết
+                </a>
+                <a href="{{ route('stores.index') }}" 
+                   class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Quay lại
+                </a>
+            </div>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-6">{{ __('Cập nhật thông tin cửa hàng') }}</h3>
+                    
+                    @if($errors->any())
+                        <div class="alert alert-error mb-6">
+                            <ul class="list-disc list-inside">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
                     <form action="{{ route('stores.update', $store) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PUT')
 
                         <!-- Tên cửa hàng -->
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label for="name" class="form-label">
                                 Tên Cửa hàng <span class="text-red-500">*</span>
                             </label>
                             <input type="text" name="name" id="name" value="{{ old('name', $store->name) }}" required
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                   class="form-input @error('name') border-red-500 @enderror">
                             @error('name')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                <p class="form-error">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Địa chỉ -->
                         <div>
-                            <label for="location" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Địa chỉ
+                            <label for="location" class="form-label">
+                                Địa chỉ <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" name="location" id="location" value="{{ old('location', $store->location) }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            <input type="text" name="location" id="location" value="{{ old('location', $store->location) }}" required
+                                   class="form-input @error('location') border-red-500 @enderror"
                                    placeholder="Ví dụ: Quận 1, TP. Hồ Chí Minh">
                             @error('location')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                <p class="form-error">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <!-- Số điện thoại -->
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Số điện thoại
-                            </label>
-                            <input type="text" name="phone" id="phone" value="{{ old('phone', $store->phone) }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                   placeholder="Ví dụ: 0901234567">
-                            @error('phone')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Quản lý -->
-                        <div>
-                            <label for="manager" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Tên Quản lý
-                            </label>
-                            <input type="text" name="manager" id="manager" value="{{ old('manager', $store->manager) }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                   placeholder="Ví dụ: Nguyễn Văn An">
-                            @error('manager')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Trạng thái -->
-                        <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Trạng thái
-                            </label>
-                            <select name="status" id="status" 
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <option value="1" {{ old('status', $store->status) == '1' ? 'selected' : '' }}>Hoạt động</option>
-                                <option value="0" {{ old('status', $store->status) == '0' ? 'selected' : '' }}>Ngừng hoạt động</option>
-                            </select>
-                            @error('status')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                        <!-- Meta information -->
+                        <div class="info-card p-4 border border-gray-100 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700">
+                            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-info-circle mr-2"></i>Thông Tin Hiện Tại
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div class="info-item">
+                                    <span class="text-gray-500 dark:text-gray-400">Ngày tạo:</span>
+                                    <span class="ml-2 font-medium">{{ $store->created_at->format('d/m/Y H:i') }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="text-gray-500 dark:text-gray-400">Cập nhật lần cuối:</span>
+                                    <span class="ml-2 font-medium">{{ $store->updated_at->format('d/m/Y H:i') }}</span>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Submit buttons -->
-                        <div class="flex justify-end space-x-3">
+                        <div class="flex justify-end space-x-3 pt-4 border-t dark:border-gray-700">
                             <a href="{{ route('stores.index') }}" 
-                               class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                               class="btn btn-secondary">
+                                <i class="fas fa-times mr-2"></i>
                                 Hủy
                             </a>
                             <button type="submit" 
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    class="btn btn-primary">
+                                <i class="fas fa-save mr-2"></i>
                                 Cập nhật Cửa hàng
                             </button>
                         </div>

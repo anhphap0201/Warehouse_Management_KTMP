@@ -130,7 +130,7 @@
                             Hủy
                         </a>
                         <button type="submit" 
-                                class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200">
+                                class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-200">
                             <i class="fas fa-paper-plane mr-2"></i>Gửi yêu cầu
                         </button>
                     </div>

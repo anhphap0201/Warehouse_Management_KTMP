@@ -1,31 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Quản lý hóa đơn nhập kho') }}
-        </h2>
-    </x-slot>    <div class="py-12">
-        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold">Danh sách hóa đơn nhập kho</h3>
-                        <a href="{{ route('purchase-orders.create') }}" 
-                           class="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-md transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                            Tạo hóa đơn mới
-                        </a>
-                    </div>
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Quản lý hóa đơn nhập kho') }}
+            </h2>
+            <a href="{{ route('purchase-orders.create') }}" 
+               class="btn btn-add-new">
+                <i class="fas fa-plus mr-2"></i>
+                Tạo hóa đơn mới
+            </a>
+        </div>
+    </x-slot>
 
+    <div class="py-4 sm:py-6">
+        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="card table-card-container">
+                <div class="card-body">
                     @if(session('success'))
-                        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                        <div class="alert alert-success mb-6">
                             {{ session('success') }}
                         </div>
                     @endif
 
                     @if(session('error'))
-                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        <div class="alert alert-error mb-6">
                             {{ session('error') }}
                         </div>
                     @endif                    <!-- Responsive Search and Filter Section -->
@@ -262,7 +260,7 @@
                                     <!-- Card Actions -->
                                     <div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                                         <a href="{{ route('purchase-orders.show', $order) }}" 
-                                           class="touch-target w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
+                                           class="action-btn-view touch-target w-full inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md transition-colors">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>

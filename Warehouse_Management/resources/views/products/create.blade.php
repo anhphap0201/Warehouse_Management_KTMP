@@ -1,79 +1,99 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Thêm Sản phẩm Mới') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="page-title flex items-center">
+                    <i class="fas fa-plus mr-3 text-blue-600"></i>
+                    {{ __('Thêm Sản phẩm Mới') }}
+                </h1>
+                <p class="page-subtitle">Tạo sản phẩm mới cho hệ thống quản lý kho</p>
+            </div>
+            <a href="{{ route('products.index') }}" class="btn btn-outline">
+                <i class="fas fa-arrow-left mr-2"></i>
+                {{ __('Quay lại') }}
+            </a>
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold">{{ __('Thông tin Sản phẩm') }}</h3>
-                        <a href="{{ route('products.index') }}" 
-                           class="inline-flex items-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium rounded-md transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                            </svg>
-                            {{ __('Quay lại') }}
-                        </a>
-                    </div>
-
-                    @if ($errors->any())
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-                            <strong>Có lỗi xảy ra:</strong>
-                            <ul class="mt-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>• {{ $error }}</li>
-                                @endforeach
-                            </ul>
+    <div class="max-w-4xl mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-blue-600"></i>
+                    {{ __('Thông tin Sản phẩm') }}
+                </h3>
+            </div>
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-error mb-6">
+                        <div class="flex">
+                            <i class="fas fa-exclamation-circle mr-3 text-red-500"></i>
+                            <div>
+                                <strong>Có lỗi xảy ra:</strong>
+                                <ul class="mt-2 list-disc list-inside">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
 
-                    <form action="{{ route('products.store') }}" method="POST" class="space-y-6">
-                        @csrf
-                        
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <form action="{{ route('products.store') }}" method="POST" class="space-y-6">
+                    @csrf
+                    
+                    <!-- Product Information Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Product Name -->
+                        <div class="form-group">
+                            <label for="name" class="form-label">
                                 Tên sản phẩm <span class="text-red-500">*</span>
                             </label>
                             <input type="text" 
                                    name="name" 
                                    id="name" 
                                    value="{{ old('name') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100" 
+                                   class="form-input" 
                                    placeholder="Nhập tên sản phẩm..."
                                    required>
                             @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="form-error">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div>
-                            <label for="sku" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <!-- SKU -->
+                        <div class="form-group">
+                            <label for="sku" class="form-label">
                                 Mã SKU <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" 
-                                   name="sku" 
-                                   id="sku" 
-                                   value="{{ old('sku') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100" 
-                                   placeholder="Nhập mã SKU..."
-                                   required>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Mã SKU phải là duy nhất</p>
+                            <div class="relative">
+                                <input type="text" 
+                                       name="sku" 
+                                       id="sku" 
+                                       value="{{ old('sku') }}" 
+                                       class="form-input pr-10" 
+                                       placeholder="Nhập mã SKU..."
+                                       required>
+                                <button type="button" 
+                                        id="generateSKU" 
+                                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                                        title="Tự động tạo SKU">
+                                    <i class="fas fa-random"></i>
+                                </button>
+                            </div>
                             @error('sku')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="form-error">{{ $message }}</p>
                             @enderror
                         </div>
-
-                        <div>
-                            <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label for="category_id" class="form-label">
                                 Danh mục <span class="text-red-500">*</span>
                             </label>
                             <select name="category_id" 
                                     id="category_id" 
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100"
+                                    class="form-select"
                                     required>
                                 <option value="">Chọn danh mục</option>
                                 @foreach($categories as $category)
@@ -84,56 +104,112 @@
                                 @endforeach
                             </select>
                             @error('category_id')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="form-error">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div>
-                            <label for="unit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Đơn vị tính <span class="text-red-500">*</span>
+                        <!-- Unit -->
+                        <div class="form-group">
+                            <label for="unit" class="form-label">
+                                Đơn vị <span class="text-red-500">*</span>
                             </label>
                             <input type="text" 
                                    name="unit" 
                                    id="unit" 
                                    value="{{ old('unit') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100" 
-                                   placeholder="VD: Cái, Kg, Hộp, Gói..."
+                                   class="form-input" 
+                                   placeholder="VD: Cái, Kg, Lít..."
                                    required>
                             @error('unit')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="form-error">{{ $message }}</p>
                             @enderror
                         </div>
+                    </div>
 
-                        <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Mô tả
-                            </label>
-                            <textarea name="description" 
-                                      id="description" 
-                                      rows="4" 
-                                      class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100" 
-                                      placeholder="Mô tả chi tiết về sản phẩm...">{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description" class="form-label">
+                            Mô tả sản phẩm
+                        </label>
+                        <textarea name="description" 
+                                  id="description" 
+                                  rows="4" 
+                                  class="form-textarea" 
+                                  placeholder="Nhập mô tả chi tiết về sản phẩm...">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="form-error">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                        <div class="flex gap-4">
-                            <button type="submit" 
-                                    class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors">
-                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Tạo sản phẩm
-                            </button>
-                            <a href="{{ route('products.index') }}" 
-                               class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-center transition-colors">
-                                Hủy
-                            </a>
-                        </div>
-                    </form>
-                </div>
+                    <!-- Form Actions -->
+                    <div class="flex items-center justify-end space-x-3 pt-6 border-t border-gray-200">
+                        <a href="{{ route('products.index') }}" class="btn btn-outline">
+                            <i class="fas fa-times mr-2"></i>
+                            Hủy bỏ
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save mr-2"></i>
+                            Lưu sản phẩm
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateSKUBtn = document.getElementById('generateSKU');
+            const skuInput = document.getElementById('sku');
+            const nameInput = document.getElementById('name');
+
+            // Auto-generate SKU
+            generateSKUBtn.addEventListener('click', function() {
+                const name = nameInput.value.trim();
+                if (name) {
+                    // Create SKU from product name + timestamp
+                    const namePrefix = name.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 3);
+                    const timestamp = Date.now().toString().slice(-6);
+                    const generatedSKU = namePrefix + timestamp;
+                    skuInput.value = generatedSKU;
+                } else {
+                    // Generate random SKU
+                    const randomSKU = 'PRD' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                    skuInput.value = randomSKU;
+                }
+            });
+
+            // Auto-suggest SKU when name changes
+            nameInput.addEventListener('blur', function() {
+                if (this.value.trim() && !skuInput.value) {
+                    const namePrefix = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 3);
+                    const timestamp = Date.now().toString().slice(-6);
+                    skuInput.value = namePrefix + timestamp;
+                }
+            });
+
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.classList.add('border-red-500');
+                    } else {
+                        field.classList.remove('border-red-500');
+                    }
+                });
+
+                if (!isValid) {
+                    e.preventDefault();
+                    alert('Vui lòng điền đầy đủ các trường bắt buộc!');
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>

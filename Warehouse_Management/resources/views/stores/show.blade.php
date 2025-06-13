@@ -1,13 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Chi tiết Cửa hàng: ') . $store->name }}
-            </h2>            <div class="flex space-x-2">
-                <a href="{{ route('stores.edit', $store) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+            </h2>
+            <div class="flex space-x-2">
+                <a href="{{ route('stores.edit', $store) }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-edit mr-2"></i>
                     Chỉnh sửa
                 </a>
-                <a href="{{ route('stores.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('stores.index') }}" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left mr-2"></i>
                     Quay lại
                 </a>
             </div>
@@ -17,39 +20,40 @@
     <div class="py-12">
         <div class="w-9/12 mx-auto sm:px-6 lg:px-8 space-y-6">
             @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
 
             <!-- Store Information -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-semibold mb-4">Thông tin Cửa hàng</h3>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-6">
+                        <i class="fas fa-store mr-2"></i>Thông tin Cửa hàng
+                    </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tên Cửa hàng</label>
-                            <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $store->name }}</p>
+                            <label class="form-label">Tên Cửa hàng</label>
+                            <div class="form-static-text">{{ $store->name }}</div>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Trạng thái</label>
-                            <p class="mt-1">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $store->status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                            <label class="form-label">Trạng thái</label>
+                            <div class="mt-1">
+                                <span class="badge {{ $store->status ? 'badge-success' : 'badge-error' }}">
                                     {{ $store->status ? 'Hoạt động' : 'Ngừng hoạt động' }}
                                 </span>
-                            </p>
+                            </div>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Địa chỉ</label>
-                            <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $store->location ?? 'Chưa có địa chỉ' }}</p>
+                            <label class="form-label">Địa chỉ</label>
+                            <div class="form-static-text">{{ $store->location ?? 'Chưa có địa chỉ' }}</div>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Số điện thoại</label>
-                            <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $store->phone ?? 'Chưa có số điện thoại' }}</p>
+                            <label class="form-label">Số điện thoại</label>
+                            <div class="form-static-text">{{ $store->phone ?? 'Chưa có số điện thoại' }}</div>
                         </div>
                         
                         <div>
@@ -65,12 +69,14 @@
                 </div>
             </div>
             <!-- Store Inventory -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="card">
+                <div class="card-body">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold">Tồn kho Cửa hàng</h3>
+                        <h3 class="card-title">
+                            <i class="fas fa-boxes mr-2"></i>Tồn kho Cửa hàng
+                        </h3>
                         @if($store->inventory && $store->inventory->count() > 0)
-                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                            <div class="badge badge-info">
                                 Tổng: {{ $store->inventory->count() }} loại sản phẩm
                             </div>
                         @endif
@@ -111,24 +117,14 @@
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="min-w-full table-auto">
+                            <table class="table table-striped">
                                 <thead>
-                                    <tr class="bg-gray-50 dark:bg-gray-700">
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Sản phẩm
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Số lượng
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Tồn kho tối thiểu
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Tồn kho tối đa
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Trạng thái
-                                        </th>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Tồn kho tối thiểu</th>
+                                        <th>Tồn kho tối đa</th>
+                                        <th>Trạng thái</th>
                                     </tr>
                                 </thead>                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                     @foreach($store->inventory as $inventory)
