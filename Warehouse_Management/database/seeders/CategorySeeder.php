@@ -13,60 +13,20 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Tạo các danh mục được định trước
+        // Tạo các danh mục theo class diagram (chỉ có id, name, timestamps)
         $categories = [
-            [
-                'name' => 'Điện tử',
-                'slug' => 'dien-tu',
-                'description' => 'Các sản phẩm điện tử và công nghệ',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Thời trang',
-                'slug' => 'thoi-trang',
-                'description' => 'Quần áo, giày dép, phụ kiện thời trang',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Gia dụng',
-                'slug' => 'gia-dung',
-                'description' => 'Đồ dùng trong gia đình',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Thực phẩm',
-                'slug' => 'thuc-pham',
-                'description' => 'Thực phẩm và đồ uống',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Sách & Văn phòng phẩm',
-                'slug' => 'sach-van-phong-pham',
-                'description' => 'Sách và các dụng cụ văn phòng',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Sức khỏe & Làm đẹp',
-                'slug' => 'suc-khoe-lam-dep',
-                'description' => 'Sản phẩm chăm sóc sức khỏe và làm đẹp',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Thể thao & Du lịch',
-                'slug' => 'the-thao-du-lich',
-                'description' => 'Dụng cụ thể thao và du lịch',
-                'parent_id' => null,
-            ],
-            [
-                'name' => 'Mẹ & Bé',
-                'slug' => 'me-be',
-                'description' => 'Sản phẩm cho mẹ và bé',
-                'parent_id' => null,
-            ],
+            ['name' => 'Điện tử'],
+            ['name' => 'Thời trang'],
+            ['name' => 'Gia dụng'],
+            ['name' => 'Thực phẩm'],
+            ['name' => 'Sách & Văn phòng phẩm'],
+            ['name' => 'Sức khỏe & Làm đẹp'],
+            ['name' => 'Thể thao & Du lịch'],
+            ['name' => 'Mẹ & Bé'],
         ];
 
         foreach ($categories as $category) {
-            Category::firstOrCreate($category);
+            Category::firstOrCreate(['name' => $category['name']], $category);
         }
 
         $this->command->info('Created ' . count($categories) . ' categories.');
