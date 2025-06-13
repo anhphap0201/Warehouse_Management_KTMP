@@ -32,10 +32,11 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories',
-            'description' => 'nullable|string',
         ]);
 
-        Category::create($request->all());
+        Category::create([
+            'name' => $request->name,
+        ]);
 
         return redirect()->route('categories.index')
             ->with('success', 'Danh mục đã được tạo thành công!');
@@ -65,10 +66,11 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-            'description' => 'nullable|string',
         ]);
 
-        $category->update($request->all());
+        $category->update([
+            'name' => $request->name,
+        ]);
 
         return redirect()->route('categories.index')
             ->with('success', 'Danh mục đã được cập nhật thành công!');

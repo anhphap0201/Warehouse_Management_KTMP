@@ -32,7 +32,7 @@
                     @endif                    @if($categories->count() > 0)
                         <!-- Categories Table -->
                         <x-table 
-                            :headers="['ID', 'Tên danh mục', 'Mô tả', 'Số sản phẩm', 'Ngày tạo', 'Thao tác']"
+                            :headers="['ID', 'Tên danh mục', 'Số sản phẩm', 'Ngày tạo', 'Thao tác']"
                             :mobileCards="true"
                             class="min-w-full">
                             @foreach($categories as $category)
@@ -43,11 +43,6 @@
                                     <td class="px-6 py-4 whitespace-nowrap" data-label="Tên danh mục">
                                         <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                             {{ $category->name }}
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4" data-label="Mô tả">
-                                        <div class="text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $category->description ? Str::limit($category->description, 50) : '-' }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap" data-label="Số sản phẩm">

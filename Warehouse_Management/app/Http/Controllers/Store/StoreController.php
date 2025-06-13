@@ -31,13 +31,10 @@ class StoreController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'manager' => 'nullable|string|max:255',
-            'status' => 'boolean',
+            'location' => 'required|string|max:255',
         ]);
 
-        Store::create($request->all());
+        Store::create($request->only(['name', 'location']));
 
         return redirect()->route('stores.index')
             ->with('success', 'Cửa hàng đã được tạo thành công!');

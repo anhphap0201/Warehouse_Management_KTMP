@@ -25,15 +25,10 @@ class Store extends Model
     protected $fillable = [
         'name',
         'location',
-        // Additional fields for backward compatibility
-        'phone',
-        'manager',
-        'status',
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'status' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

@@ -41,10 +41,6 @@
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Thông tin cơ bản</h3>
                             <p><strong>Tên danh mục:</strong> {{ $category->name }}</p>
                             <p><strong>Ngày tạo:</strong> {{ $category->created_at->format('d/m/Y H:i') }}</p>
-                            @if($category->description)
-                                <p class="mt-2"><strong>Mô tả:</strong></p>
-                                <p class="text-gray-600 dark:text-gray-400">{{ $category->description }}</p>
-                            @endif
                         </div>
 
                         <div class="bg-purple-50 dark:bg-purple-900 p-4 rounded-lg">                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Thống kê</h3>
