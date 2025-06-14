@@ -48,135 +48,123 @@
 
     @if($products->count() > 0)
         <!-- Products Grid/Table -->
-        <div class="card">
-            <div class="card-header">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-gray-900">
-                        Danh sách sản phẩm ({{ $products->total() }})
-                    </h3>
-                    <div class="flex items-center space-x-2">
-                        <button type="button" class="btn btn-sm btn-outline" id="toggleView" data-view="table">
-                            <i class="fas fa-th-large mr-1"></i>
-                            Dạng lưới
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline" onclick="window.print()">
-                            <i class="fas fa-print mr-1"></i>
-                            In
-                        </button>
-                    </div>
+        <div class="mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Danh sách sản phẩm ({{ $products->total() }})
+                </h3>
+                <div class="flex items-center space-x-2">
+                    <button type="button" class="btn btn-sm btn-outline" id="toggleView" data-view="table">
+                        <i class="fas fa-th-large mr-1"></i>
+                        Dạng lưới
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="window.print()">
+                        <i class="fas fa-print mr-1"></i>
+                        In
+                    </button>
                 </div>
             </div>
-            <div class="card-body p-0">
-                <!-- Table View -->
-                <div id="tableView" class="overflow-x-auto">
-                    <table class="table-modern">
-                        <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th>SKU</th>
-                                <th>Danh mục</th>
-                                <th>Đơn vị</th>
-                                <th>Tồn kho</th>
-                                <th>Ngày tạo</th>
-                                <th class="text-center">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($products as $product)
-                                <tr class="product-row" 
-                                    data-name="{{ strtolower($product->name) }}" 
-                                    data-sku="{{ strtolower($product->sku) }}" 
-                                    data-category="{{ strtolower($product->category->name ?? '') }}" 
-                                    data-category-id="{{ $product->category_id ?? '' }}"
-                                    data-search="{{ strtolower($product->name . ' ' . $product->sku . ' ' . ($product->category->name ?? '')) }}">
-                                    
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                                                <i class="fas fa-box text-blue-600"></i>
-                                            </div>
-                                            <div>
-                                                <div class="font-medium text-gray-900">{{ $product->name }}</div>
-                                                @if($product->description)
-                                                    <div class="text-sm text-gray-500">{{ Str::limit($product->description, 50) }}</div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </td>
-                                    
-                                    <td>
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            {{ $product->sku }}
-                                        </span>
-                                    </td>
-                                    
-                                    <td>
-                                        @if($product->category)
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                {{ $product->category->name }}
-                                            </span>
-                                        @else
-                                            <span class="text-gray-400 text-sm">Chưa phân loại</span>
+            <!-- Table View -->
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>SKU</th>
+                        <th>Danh mục</th>
+                        <th>Đơn vị</th>
+                        <th>Tồn kho</th>
+                        <th>Ngày tạo</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($products as $product)
+                        <tr class="product-row" 
+                            data-name="{{ strtolower($product->name) }}" 
+                            data-sku="{{ strtolower($product->sku) }}" 
+                            data-category="{{ strtolower($product->category->name ?? '') }}" 
+                            data-category-id="{{ $product->category_id ?? '' }}"
+                            data-search="{{ strtolower($product->name . ' ' . $product->sku . ' ' . ($product->category->name ?? '')) }}">
+                            <td>
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-box text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">{{ $product->name }}</div>
+                                        @if($product->description)
+                                            <div class="text-sm text-gray-500">{{ Str::limit($product->description, 50) }}</div>
                                         @endif
-                                    </td>
-                                    
-                                    <td>
-                                        <span class="text-sm text-gray-900">{{ $product->unit }}</span>
-                                    </td>
-                                    
-                                    <td>
-                                        @php
-                                            $totalInventory = $product->inventory->sum('quantity');
-                                        @endphp
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $totalInventory > 10 ? 'bg-green-100 text-green-800' : ($totalInventory > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
-                                            {{ $totalInventory }} {{ $product->unit }}
-                                        </span>
-                                    </td>
-                                    
-                                    <td>
-                                        <span class="text-sm text-gray-500">{{ $product->created_at->format('d/m/Y') }}</span>
-                                    </td>
-                                    
-                                    <td class="text-center">
-                                        <div class="flex items-center justify-center space-x-1">
-                                            <a href="{{ route('products.show', $product) }}" 
-                                               class="btn btn-sm btn-outline"
-                                               title="Xem chi tiết">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('products.edit', $product) }}" 
-                                               class="btn btn-sm btn-outline"
-                                               title="Chỉnh sửa">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('products.destroy', $product) }}" 
-                                                  method="POST" 
-                                                  style="display: inline;"
-                                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" 
-                                                        class="btn btn-sm btn-danger"
-                                                        title="Xóa">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-8">
-                                        <div class="flex flex-col items-center justify-center">
-                                            <i class="fas fa-search text-gray-300 text-4xl mb-4"></i>
-                                            <p class="text-gray-500">Không tìm thấy sản phẩm nào</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                    {{ $product->sku }}
+                                </span>
+                            </td>
+                            <td>
+                                @if($product->category)
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ $product->category->name }}
+                                    </span>
+                                @else
+                                    <span class="text-gray-400 text-sm">Chưa phân loại</span>
+                                @endif
+                            </td>
+                            <td>
+                                <span class="text-sm text-gray-900">{{ $product->unit }}</span>
+                            </td>
+                            <td>
+                                @php
+                                    $totalInventory = $product->inventory->sum('quantity');
+                                @endphp
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $totalInventory > 10 ? 'bg-green-100 text-green-800' : ($totalInventory > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                    {{ $totalInventory }} {{ $product->unit }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="text-sm text-gray-500">{{ $product->created_at->format('d/m/Y') }}</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <a href="{{ route('products.show', $product) }}" 
+                                       class="btn btn-sm btn-outline"
+                                       title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('products.edit', $product) }}" 
+                                       class="btn btn-sm btn-outline"
+                                       title="Chỉnh sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('products.destroy', $product) }}" 
+                                          method="POST" 
+                                          style="display: inline;"
+                                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                                class="btn btn-sm btn-danger"
+                                                title="Xóa">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center py-8">
+                                <div class="flex flex-col items-center justify-center">
+                                    <i class="fas fa-search text-gray-300 text-4xl mb-4"></i>
+                                    <p class="text-gray-500">Không tìm thấy sản phẩm nào</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
                 
                 <!-- Grid View (Hidden by default) -->
                 <div id="gridView" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
@@ -228,7 +216,6 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
         </div>
 
         <!-- Pagination -->

@@ -1,109 +1,120 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="page-title flex items-center">
-                    <i class="fas fa-tags mr-3 text-green-600"></i>
-                    {{ __('Quản lý Danh mục') }}
-                </h1>
-                <p class="page-subtitle">Quản lý danh mục sản phẩm và phân loại</p>
+        <div class="page-header-standard">
+            <div class="page-header-content">
+                <div class="page-title-section">
+                    <h1 class="page-title-main text-gray-900">
+                        <div class="page-title-icon simple-bg">
+                            <i class="fas fa-tags text-green-600 text-lg"></i>
+                        </div>
+                        {{ __('Quản lý Danh mục') }}
+                    </h1>
+                    <p class="page-subtitle">Quản lý danh mục sản phẩm và phân loại</p>
+                </div>
+                <div class="page-actions">
+                    <a href="{{ route('categories.create') }}" class="btn-primary-standard">
+                        <i class="fas fa-plus mr-2"></i>
+                        {{ __('Thêm Danh mục') }}
+                    </a>
+                </div>
             </div>
-            <a href="{{ route('categories.create') }}" class="btn btn-add-new">
-                <i class="fas fa-plus mr-2"></i>
-                {{ __('Thêm Danh mục') }}
-            </a>
         </div>
     </x-slot>
 
-    <div class="py-4 sm:py-6">
-        <div class="container-modern">
+    <div class="page-container">
+        <div class="page-content">
             <!-- Flash Messages -->
             @if(session('success'))
-                <div class="alert alert-success mb-6">
-                    {{ session('success') }}
+                <div class="flash-success mb-6">
+                    <div class="flash-content">
+                        <i class="fas fa-check-circle flash-icon success"></i>
+                        <span class="flash-text success">{{ session('success') }}</span>
+                    </div>
                 </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-error mb-6">
-                    {{ session('error') }}
+                <div class="flash-error mb-6">
+                    <div class="flash-content">
+                        <i class="fas fa-exclamation-circle flash-icon error"></i>
+                        <span class="flash-text error">{{ session('error') }}</span>
+                    </div>
                 </div>
             @endif
 
             @if($categories->count() > 0)
                 <!-- Categories Table -->
-                <div class="card table-card-container">
-                    <div class="card-header">
-                        <h3 class="text-lg font-semibold text-gray-900">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="content-card-title">
+                            <i class="fas fa-list mr-3 text-green-600"></i>
                             Danh sách danh mục ({{ $categories->count() }})
                         </h3>
+                        <p class="content-card-subtitle">Tất cả danh mục sản phẩm được quản lý trong hệ thống</p>
                     </div>
-                    <div class="card-body p-0">
-                        <div class="overflow-x-auto">
-                            <table class="table-modern">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Tên danh mục</th>
-                                        <th>Số sản phẩm</th>
-                                        <th>Ngày tạo</th>
-                                        <th class="text-center">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($categories as $category)
-                                        <tr>
-                                            <td>
-                                                <span class="text-sm font-medium text-gray-900">{{ $category->id }}</span>
-                                            </td>
-                                            <td>
-                                                <div class="flex items-center">
-                                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                                                        <i class="fas fa-tag text-green-600"></i>
-                                                    </div>
-                                                    <div class="font-medium text-gray-900">{{ $category->name }}</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                                    {{ $category->products_count }} sản phẩm
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="text-sm text-gray-500">{{ $category->created_at->format('d/m/Y') }}</span>
-                                            </td>
-                                            <td class="table-actions">
-                                                <div class="action-buttons">
-                                                    <a href="{{ route('categories.show', $category) }}" 
-                                                       class="action-btn action-btn-view"
-                                                       title="Xem chi tiết">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('categories.edit', $category) }}" 
-                                                       class="action-btn action-btn-edit"
-                                                       title="Chỉnh sửa">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('categories.destroy', $category) }}" 
-                                                          method="POST" 
-                                                          style="display: inline;"
-                                                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" 
-                                                                class="action-btn action-btn-delete"
-                                                                title="Xóa">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <div class="table-wrapper">
+                        <table class="table-modern">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên danh mục</th>
+                                <th>Số sản phẩm</th>
+                                <th>Ngày tạo</th>
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categories as $category)
+                                <tr>
+                                    <td>
+                                        <span class="text-sm font-medium text-gray-900">{{ $category->id }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-tag text-green-600"></i>
+                                            </div>
+                                            <div class="font-medium text-gray-900">{{ $category->name }}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            {{ $category->products_count }} sản phẩm
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-sm text-gray-500">{{ $category->created_at->format('d/m/Y') }}</span>
+                                    </td>
+                                    <td class="table-actions">
+                                        <div class="action-buttons">
+                                            <a href="{{ route('categories.show', $category) }}" 
+                                               class="action-btn action-btn-view"
+                                               title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('categories.edit', $category) }}" 
+                                               class="action-btn action-btn-edit"
+                                               title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('categories.destroy', $category) }}" 
+                                                  method="POST" 
+                                                  style="display: inline;"
+                                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" 
+                                                        class="action-btn action-btn-delete"
+                                                        title="Xóa">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
             @else

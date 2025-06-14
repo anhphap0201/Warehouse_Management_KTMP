@@ -1,95 +1,56 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Quản lý hóa đơn nhập kho') }}
-            </h2>
-            <a href="{{ route('purchase-orders.create') }}" 
-               class="btn btn-add-new">
-                <i class="fas fa-plus mr-2"></i>
-                Tạo hóa đơn mới
-            </a>
+        <div class="page-header-standard">
+            <div class="page-header-content">
+                <div class="page-title-section">
+                    <h1 class="page-title-main text-gray-900">
+                        <div class="page-title-icon simple-bg">
+                            <i class="fas fa-shopping-cart text-purple-600 text-lg"></i>
+                        </div>
+                        {{ __('Quản lý hóa đơn nhập kho') }}
+                    </h1>
+                    <p class="page-subtitle">Quản lý các đơn hàng nhập kho từ nhà cung cấp</p>
+                </div>
+                <div class="page-actions">
+                    <a href="{{ route('purchase-orders.create') }}" class="btn-primary-standard">
+                        <i class="fas fa-plus mr-2"></i>
+                        Tạo hóa đơn mới
+                    </a>
+                </div>
+            </div>
         </div>
     </x-slot>
 
-    <div class="py-4 sm:py-6">
-        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="card table-card-container">
-                <div class="card-body">
-                    @if(session('success'))
-                        <div class="alert alert-success mb-6">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+    <div class="page-container">
+        <div class="page-content">
+            @if(session('success'))
+                <div class="flash-success mb-6">
+                    <div class="flash-content">
+                        <i class="fas fa-check-circle flash-icon success"></i>
+                        <span class="flash-text success">{{ session('success') }}</span>
+                    </div>
+                </div>
+            @endif
 
-                    @if(session('error'))
-                        <div class="alert alert-error mb-6">
-                            {{ session('error') }}
-                        </div>
-                    @endif                    <!-- Responsive Search and Filter Section -->
+            @if(session('error'))
+                <div class="flash-error mb-6">
+                    <div class="flash-content">
+                        <i class="fas fa-exclamation-circle flash-icon error"></i>
+                        <span class="flash-text error">{{ session('error') }}</span>
+                    </div>
+                </div>
+            @endif
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="content-card-title">
+                        <i class="fas fa-list mr-3 text-purple-600"></i>
+                        Danh sách hóa đơn nhập kho
+                    </h3>
+                    <p class="content-card-subtitle">Tất cả hóa đơn nhập kho được quản lý trong hệ thống</p>
+                </div>
+                <div class="table-wrapper">                    <!-- Responsive Search and Filter Section -->
                     <x-form-section class="mb-6" padding="responsive">
-                        <div class="form-grid-responsive-3">
-                            <!-- Warehouse Search -->
-                            <div class="relative">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kho hàng</label>
-                                <div class="relative">
-                                    <x-text-input 
-                                        type="text" 
-                                        id="warehouseSearch" 
-                                        placeholder="Tìm kiếm kho hàng..."
-                                        class="w-full"
-                                        size="sm" />
-                                    <div id="warehouseDropdown" class="absolute z-[9999] mt-1 w-full bg-white dark:bg-gray-700 shadow-2xl max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none hidden" style="z-index: 9999 !important;">
-                                        <!-- Dynamic content -->
-                                    </div>
-                                </div>
-                                <input type="hidden" name="warehouse_id" id="selectedWarehouse" value="{{ request('warehouse_id') }}">
-                            </div>
-
-                            <!-- Status Filter -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Trạng thái</label>
-                                <select name="status" id="statusFilter" class="touch-target w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
-                                    <option value="">Tất cả trạng thái</option>
-                                    <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Đã xác nhận</option>
-                                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
-                                </select>
-                            </div>
-
-                            <!-- Global Search Input -->
-                            <div class="col-span-full">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tìm kiếm</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <x-text-input 
-                                        type="text" 
-                                        name="search" 
-                                        id="globalSearch"
-                                        class="w-full pl-10 pr-10"
-                                        placeholder="Tìm theo số hóa đơn, nhà cung cấp..." 
-                                        value="{{ request('search') }}" 
-                                        size="sm" />
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                        <div id="searchLoader" class="hidden">
-                                            <svg class="animate-spin h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24">
-                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                        </div>
-                                        <button type="button" id="clearSearch" class="touch-target hidden text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Search Results Summary -->
                         <div id="searchResults" class="hidden mt-4">
                             <div class="bg-blue-50 dark:bg-blue-900/50 border border-blue-200 dark:border-blue-700 rounded-md p-3">
@@ -585,7 +546,7 @@ function updateTable(orders) {
                 <td class="px-6 py-4 whitespace-nowrap">
                     <span class="text-sm font-bold text-purple-600 dark:text-purple-400">${total}</span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                         <svg class="h-4 w-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>

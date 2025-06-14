@@ -1,34 +1,57 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Quản lý nhà cung cấp') }}
-            </h2>
-            <a href="{{ route('suppliers.create') }}" 
-               class="btn btn-add-new">
-                <i class="fas fa-plus mr-2"></i>
-                Thêm nhà cung cấp
-            </a>
+        <div class="page-header-standard">
+            <div class="page-header-content">
+                <div class="page-title-section">
+                    <h1 class="page-title-main text-gray-900">
+                        <div class="page-title-icon simple-bg">
+                            <i class="fas fa-truck text-orange-600 text-lg"></i>
+                        </div>
+                        {{ __('Quản lý nhà cung cấp') }}
+                    </h1>
+                    <p class="page-subtitle">Quản lý thông tin các nhà cung cấp hàng hóa</p>
+                </div>
+                <div class="page-actions">
+                    <a href="{{ route('suppliers.create') }}" class="btn-primary-standard">
+                        <i class="fas fa-plus mr-2"></i>
+                        Thêm nhà cung cấp
+                    </a>
+                </div>
+            </div>
         </div>
     </x-slot>
 
-    <div class="py-4 sm:py-6">
-        <div class="container-modern">
-            <div class="card">
-                <div class="card-body">
-                    <!-- Flash Messages -->
-                    @if(session('success'))
-                        <div class="alert alert-success mb-6">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+    <div class="page-container">
+        <div class="page-content">
+            <!-- Flash Messages -->
+            @if(session('success'))
+                <div class="flash-success mb-6">
+                    <div class="flash-content">
+                        <i class="fas fa-check-circle flash-icon success"></i>
+                        <span class="flash-text success">{{ session('success') }}</span>
+                    </div>
+                </div>
+            @endif
 
-                    @if(session('error'))
-                        <div class="alert alert-error mb-6">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+            @if(session('error'))
+                <div class="flash-error mb-6">
+                    <div class="flash-content">
+                        <i class="fas fa-exclamation-circle flash-icon error"></i>
+                        <span class="flash-text error">{{ session('error') }}</span>
+                    </div>
+                </div>
+            @endif
 
+            <!-- Suppliers Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 class="content-card-title">
+                        <i class="fas fa-list mr-3 text-orange-600"></i>
+                        Danh sách nhà cung cấp ({{ $suppliers->count() }})
+                    </h3>
+                    <p class="content-card-subtitle">Tất cả nhà cung cấp được quản lý trong hệ thống</p>
+                </div>
+                <div class="table-wrapper">
                     <!-- Suppliers Table -->
                     <x-table 
                         :headers="['Nhà cung cấp', 'Thông tin liên hệ', 'Trạng thái', 'Ngày tạo', 'Thao tác']"
