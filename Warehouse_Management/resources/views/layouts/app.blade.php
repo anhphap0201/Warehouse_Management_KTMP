@@ -35,8 +35,8 @@
                     <!-- Logo -->
                     <div class="flex items-center flex-shrink-0 px-6">
                         <a href="{{ route('dashboard') }}" class="flex items-center">
-                            <div class="w-8 h-8 bg-gray-600 rounded-lg flex items-center justify-center mr-3">
-                                <i class="fas fa-warehouse text-white text-sm"></i>
+                            <div class="w-8 h-8 flex items-center justify-center mr-3">
+                                <i class="fas fa-warehouse text-gray-600 text-sm"></i>
                             </div>
                             <h1 class="text-lg font-bold text-gray-900">WMS</h1>
                         </a>
@@ -165,25 +165,7 @@
                         @yield('header')
                     </header>
                 @endif
-                
-                <!-- Flash Messages -->
-                @if(session('success'))
-                    <div class="alert-success mx-4 mt-4" role="alert">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle mr-3 text-green-500"></i>
-                            <span class="font-medium">{{ session('success') }}</span>
-                        </div>
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="alert-error mx-4 mt-4" role="alert">
-                        <div class="flex items-center">
-                            <i class="fas fa-exclamation-circle mr-3 text-red-500"></i>
-                            <span class="font-medium">{{ session('error') }}</span>
-                        </div>
-                    </div>
-                @endif
+            
 
                 <!-- Page Content -->
                 <main class="flex-1 py-6">

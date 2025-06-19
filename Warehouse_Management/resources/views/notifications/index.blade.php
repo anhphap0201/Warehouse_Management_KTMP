@@ -19,7 +19,7 @@
                 </div>
                 <div class="ml-3">
                     <p class="text-sm text-yellow-700">
-                        Thông báo sẽ chỉ được đánh dấu đã đọc khi bạn nhấp vào để xem chi tiết. Các thông báo chưa đọc được đánh dấu bằng <span class="font-semibold">nền xanh</span> và <span class="font-semibold">biểu tượng "Chưa đọc"</span>.
+                        Thông báo sẽ chỉ được đánh dấu đã đọc khi bạn nhấp vào để xem chi tiết. Các thông báo chưa đọc được đánh dấu bằng <span class="font-semibold text-yellow-800 bg-transparent">nền xanh</span> và <span class="font-semibold text-yellow-800 bg-transparent">biểu tượng "Chưa đọc"</span>.
                     </p>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                    class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm touch-target {{ request('status') === 'pending' ? 'border-indigo-500 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400' : '' }}">
                     Chờ xử lý
                     @if($notifications->where('status', 'pending')->count() > 0)
-                        <span class="bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 text-xs font-semibold ml-2 px-2.5 py-0.5 rounded-full">
+                        <span class="bg-transparent border border-red-200 text-red-600 text-xs font-semibold ml-2 px-2.5 py-0.5 rounded-full">
                             {{ $notifications->where('status', 'pending')->count() }}
                         </span>
                     @endif
@@ -52,8 +52,8 @@
             </nav>
         </div>
 
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden">        @forelse($notifications as $notification)
-            <div class="border-b border-gray-200 {{ !$notification->read_at ? 'bg-blue-50' : '' }}">
+    <div class="bg-transparent shadow-lg rounded-lg overflow-hidden border border-gray-200">        @forelse($notifications as $notification)
+            <div class="notification-item border-b border-gray-200 {{ !$notification->read_at ? 'bg-blue-50' : '' }}">
                 <div class="p-6 hover:bg-gray-50 cursor-pointer relative" onclick="window.location='{{ route('notifications.show', $notification) }}'">
                     @if(!$notification->read_at)
                         <div class="absolute top-0 right-0 mt-4 mr-4">
@@ -133,7 +133,7 @@
                                         Đã phê duyệt
                                     </span>
                                     @if($notification->warehouse)
-                                        <span class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                                        <span class="text-xs text-blue-600 bg-transparent px-2 py-1 rounded border border-blue-200">
                                             {{ $notification->warehouse->name }}
                                         </span>
                                     @endif
@@ -160,24 +160,24 @@
     </div>    <!-- Pagination -->
     @if($notifications->hasPages())
         <div class="mt-6 flex justify-center">
-            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div class="bg-transparent px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
                     @if($notifications->onFirstPage())
-                        <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
+                        <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-transparent border border-gray-300 cursor-default leading-5 rounded-md">
                             Trước
                         </span>
                     @else
-                        <a href="{{ $notifications->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                        <a href="{{ $notifications->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-transparent border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                             Trước
                         </a>
                     @endif
 
                     @if($notifications->hasMorePages())
-                        <a href="{{ $notifications->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                        <a href="{{ $notifications->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-transparent border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                             Sau
                         </a>
                     @else
-                        <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
+                        <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-transparent border border-gray-300 cursor-default leading-5 rounded-md">
                             Sau
                         </span>
                     @endif
@@ -200,14 +200,14 @@
                         <span class="relative z-0 inline-flex shadow-sm rounded-md">
                             @if($notifications->onFirstPage())
                                 <span aria-disabled="true" aria-label="Trước">
-                                    <span class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-l-md leading-5" aria-hidden="true">
+                                    <span class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-transparent border border-gray-300 cursor-default rounded-l-md leading-5" aria-hidden="true">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                         </svg>
                                     </span>
                                 </span>
                             @else
-                                <a href="{{ $notifications->previousPageUrl() }}" rel="prev" class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Trước">
+                                <a href="{{ $notifications->previousPageUrl() }}" rel="prev" class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-transparent border border-gray-300 rounded-l-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Trước">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                     </svg>
@@ -220,19 +220,19 @@
                                         <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-white bg-blue-600 border border-blue-600 cursor-default leading-5">{{ $page }}</span>
                                     </span>
                                 @else
-                                    <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Trang {{ $page }}">{{ $page }}</a>
+                                    <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-transparent border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Trang {{ $page }}">{{ $page }}</a>
                                 @endif
                             @endforeach
 
                             @if($notifications->hasMorePages())
-                                <a href="{{ $notifications->nextPageUrl() }}" rel="next" class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Sau">
+                                <a href="{{ $notifications->nextPageUrl() }}" rel="next" class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-transparent border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Sau">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                     </svg>
                                 </a>
                             @else
                                 <span aria-disabled="true" aria-label="Sau">
-                                    <span class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5" aria-hidden="true">
+                                    <span class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-transparent border border-gray-300 cursor-default rounded-r-md leading-5" aria-hidden="true">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                     </span>
@@ -251,10 +251,10 @@
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" onclick="closeApprovalModal()"></div>
         
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="inline-block align-bottom bg-transparent rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-200">
             <form id="approvalForm" method="POST" action="">
                 @csrf
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="bg-transparent px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
                             <i class="fas fa-check text-green-600"></i>
@@ -294,7 +294,7 @@
                         Phê duyệt
                     </button>
                     <button type="button" onclick="closeApprovalModal()" 
-                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-transparent text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Hủy
                     </button>
                 </div>
@@ -308,10 +308,10 @@
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" onclick="closeRejectionModal()"></div>
         
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="inline-block align-bottom bg-transparent rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-200">
             <form id="rejectionForm" method="POST" action="">
                 @csrf
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="bg-transparent px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                             <i class="fas fa-times text-red-600"></i>
@@ -338,7 +338,7 @@
                         Từ chối
                     </button>
                     <button type="button" onclick="closeRejectionModal()" 
-                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-transparent text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Hủy
                     </button>
                 </div>

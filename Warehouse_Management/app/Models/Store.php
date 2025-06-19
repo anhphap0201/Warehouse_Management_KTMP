@@ -80,7 +80,7 @@ class Store extends Model
      */
     public function isActive(): bool
     {
-        return $this->status;
+        return true; // Always return true since we don't have status column
     }
 
     /**

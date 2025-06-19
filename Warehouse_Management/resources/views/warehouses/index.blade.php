@@ -34,22 +34,15 @@
 
             <!-- Warehouses Grid -->
             <div class="content-card">
-                <div class="content-card-header">
-                    <h3 class="content-card-title">
-                        <i class="fas fa-list mr-3 text-blue-600"></i>
-                        Danh Sách Kho Hàng
-                    </h3>
-                    <p class="content-card-subtitle">Tất cả kho hàng được quản lý trong hệ thống</p>
-                </div>
 
                 <div class="content-card-body">                    @if($warehouses->count() > 0)                        <div class="content-grid">
                             @foreach($warehouses as $warehouse)
-                                <div class="group bg-white hover:bg-blue-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 hover:border-blue-300 overflow-hidden">
+                                <div class="group bg-transparent hover:bg-blue-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 hover:border-blue-300 overflow-hidden">
                                     <!-- Card Header -->
                                     <div class="p-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center">
-                                                <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                                <div class="bg-transparent bg-opacity-20 p-3 rounded-full mr-4 border border-white border-opacity-30">
                                                     <i class="fas fa-warehouse text-xl"></i>
                                                 </div>
                                                 <div>
@@ -59,7 +52,7 @@
                                             </div>
                                         </div>
                                     </div>                                    <!-- Card Body -->
-                                    <div class="p-6 bg-white group-hover:bg-blue-50 transition-colors duration-300">
+                                    <div class="p-6 bg-transparent group-hover:bg-blue-50 transition-colors duration-300">
                                         @if($warehouse->location)
                                             <div class="flex items-center text-gray-600 mb-4">
                                                 <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>

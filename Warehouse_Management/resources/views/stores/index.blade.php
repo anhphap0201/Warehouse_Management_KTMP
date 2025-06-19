@@ -44,13 +44,6 @@
             @if($stores->count() > 0)
                 <!-- Stores Table -->
                 <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="content-card-title">
-                            <i class="fas fa-list mr-3 text-blue-600"></i>
-                            Danh sách cửa hàng ({{ $stores->count() }})
-                        </h3>
-                        <p class="content-card-subtitle">Tất cả cửa hàng được quản lý trong hệ thống</p>
-                    </div>
                     <div class="table-wrapper">
                         <!-- Stores Table -->
                         <x-table 
@@ -85,7 +78,7 @@
                                             {{ $store->status ? 'Hoạt động' : 'Ngừng hoạt động' }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" data-label="Hành động">
+                                    <td class="table-actions" data-label="Hành động">
                                         <div class="action-buttons">
                                             <a href="{{ route('stores.show', $store) }}" 
                                                class="action-btn action-btn-view"

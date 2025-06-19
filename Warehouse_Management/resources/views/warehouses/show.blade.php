@@ -1,12 +1,5 @@
-<x-app-layout>
-    <x-slot name="header">
-        <di                            <a href="{{ route('warehouses.edit', $warehouse) }}" 
-                               class="action-btn-edit inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                </svg>
-                                Chỉnh Sửa Kho
-                            </a>="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+<x-app-layout>    <x-slot name="header">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Chi Tiết Kho Hàng') }}
             </h2>
@@ -81,7 +74,7 @@
             </div>
 
             <!-- Warehouse Inventory Section -->
-            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="mt-8 bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-semibold">Tồn kho trong Kho hàng</h3>
@@ -99,7 +92,7 @@
                             </div>
                             <input type="text" 
                                    id="searchInput" 
-                                   class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                   class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-transparent dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="Tìm kiếm sản phẩm theo tên, SKU, mô tả hoặc danh mục...">
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                 <div id="searchLoader" class="hidden">
@@ -175,7 +168,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                <tbody class="bg-transparent dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                     @foreach($filteredInventory as $inventory)
                                     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -259,179 +252,8 @@
                 </div>
             </div>        </div>
     </div>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        const searchLoader = document.getElementById('searchLoader');
-        const clearSearch = document.getElementById('clearSearch');
-        const searchResults = document.getElementById('searchResults');
-        const searchResultsText = document.getElementById('searchResultsText');
-        const inventoryTable = document.querySelector('tbody');
-        const tableFooter = document.querySelector('tfoot');
-        const emptyState = document.querySelector('.text-center.py-12');
-        
-        let searchTimeout;
-        let allInventoryRows = [];
-        let filteredRows = [];
-        
-        // Lưu trữ dữ liệu tồn kho gốc
-        if (inventoryTable) {
-            allInventoryRows = Array.from(inventoryTable.querySelectorAll('tr')).map(row => {
-                const productName = row.querySelector('td:nth-child(1) .text-sm.font-medium')?.textContent?.toLowerCase() || '';
-                const productDescription = row.querySelector('td:nth-child(1) .text-sm.text-gray-500')?.textContent?.toLowerCase() || '';
-                const sku = row.querySelector('td:nth-child(2) .font-mono')?.textContent?.toLowerCase() || '';
-                const category = row.querySelector('td:nth-child(3) .inline-flex')?.textContent?.toLowerCase() || '';
-                const quantity = row.querySelector('td:nth-child(4) .inline-flex')?.textContent || '';
-                
-                return {
-                    element: row,
-                    searchText: `${productName} ${productDescription} ${sku} ${category}`.trim(),
-                    productName: productName,
-                    quantity: quantity
-                };
-            });
-            filteredRows = [...allInventoryRows];
-        }
-        
-        function showLoader() {
-            searchLoader.classList.remove('hidden');
-        }
-        
-        function hideLoader() {
-            searchLoader.classList.add('hidden');
-        }
-        
-        function updateClearButton() {
-            if (searchInput.value.trim()) {
-                clearSearch.classList.remove('hidden');
-            } else {
-                clearSearch.classList.add('hidden');
-            }
-        }
-        
-        function updateSearchResults(query, resultCount, totalCount) {
-            if (query.trim()) {
-                searchResults.classList.remove('hidden');
-                if (resultCount === 0) {
-                    searchResultsText.textContent = `Không tìm thấy kết quả nào cho "${query}"`;
-                } else if (resultCount === totalCount) {
-                    searchResults.classList.add('hidden');
-                } else {
-                    searchResultsText.textContent = `Tìm thấy ${resultCount} trong ${totalCount} sản phẩm cho "${query}"`;
-                }
-            } else {
-                searchResults.classList.add('hidden');
-            }
-        }
-        
-        function updateTableFooter(filteredCount) {
-            if (tableFooter && filteredRows.length > 0) {
-                const totalQuantity = filteredRows.reduce((sum, row) => {
-                    const quantityText = row.quantity.replace(/[^\d]/g, '');
-                    return sum + (parseInt(quantityText) || 0);
-                }, 0);
-                
-                const footerCell = tableFooter.querySelector('td:nth-child(2) .inline-flex');
-                if (footerCell) {
-                    footerCell.textContent = `${totalQuantity.toLocaleString()} sản phẩm`;
-                }
-            }
-        }
-        
-        function performSearch(query) {
-            showLoader();
-            
-            // Mô phỏng tìm kiếm async với setTimeout
-            setTimeout(() => {
-                if (!inventoryTable) {
-                    hideLoader();
-                    return;
-                }
-                
-                const searchTerms = query.toLowerCase().trim().split(/\s+/).filter(term => term.length > 0);
-                
-                if (searchTerms.length === 0) {
-                    // Hiển thị tất cả dòng
-                    filteredRows = [...allInventoryRows];
-                    allInventoryRows.forEach(row => {
-                        row.element.style.display = '';
-                    });
-                    
-                    if (emptyState) {
-                        emptyState.style.display = 'none';
-                    }
-                    inventoryTable.parentElement.parentElement.style.display = '';
-                } else {
-                    // Lọc dòng dựa trên các từ khóa tìm kiếm
-                    filteredRows = allInventoryRows.filter(row => {
-                        return searchTerms.every(term => row.searchText.includes(term));
-                    });
-                    
-                    // Hiển thị/ẩn dòng
-                    allInventoryRows.forEach(row => {
-                        const shouldShow = filteredRows.includes(row);
-                        row.element.style.display = shouldShow ? '' : 'none';
-                    });
-                    
-                    // Xử lý trạng thái rỗng
-                    if (filteredRows.length === 0) {
-                        if (emptyState) {
-                            emptyState.style.display = '';
-                            const title = emptyState.querySelector('h3');
-                            const description = emptyState.querySelector('p');
-                            if (title) title.textContent = 'Không tìm thấy sản phẩm nào';
-                            if (description) description.textContent = `Không có sản phẩm nào khớp với từ khóa "${query}". Hãy thử từ khóa khác.`;
-                        }
-                        inventoryTable.parentElement.parentElement.style.display = 'none';
-                    } else {
-                        if (emptyState) {
-                            emptyState.style.display = 'none';
-                        }
-                        inventoryTable.parentElement.parentElement.style.display = '';
-                    }
-                }
-                
-                updateSearchResults(query, filteredRows.length, allInventoryRows.length);
-                updateTableFooter(filteredRows.length);
-                hideLoader();
-            }, 100);
-        }
-        
-        // Xử lý sự kiện input tìm kiếm với debounce
-        searchInput.addEventListener('input', function() {
-            const query = this.value;
-            updateClearButton();
-            
-            // Xóa timeout trước đó
-            if (searchTimeout) {
-                clearTimeout(searchTimeout);
-            }
-            
-            // Đặt timeout mới cho 300ms
-            searchTimeout = setTimeout(() => {
-                performSearch(query);
-            }, 300);
-        });
-        
-        // Nút xóa tìm kiếm
-        clearSearch.addEventListener('click', function() {
-            searchInput.value = '';
-            updateClearButton();
-            performSearch('');
-        });
-        
-        // Xử lý focus và blur của input tìm kiếm để cải thiện UX
-        searchInput.addEventListener('focus', function() {
-            this.parentElement.classList.add('ring-2', 'ring-blue-500', 'border-blue-500');
-        });
-        
-        searchInput.addEventListener('blur', function() {
-            this.parentElement.classList.remove('ring-2', 'ring-blue-500', 'border-blue-500');
-        });
-        
-        // Khởi tạo
-        updateClearButton();
-    });
-    </script>
+
+    @push('scripts')
+    @vite(['resources/js/warehouse-show.js'])
+    @endpush
 </x-app-layout>

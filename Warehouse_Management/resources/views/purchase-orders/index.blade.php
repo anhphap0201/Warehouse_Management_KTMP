@@ -42,13 +42,6 @@
             @endif
 
             <div class="table-container">
-                <div class="table-header">
-                    <h3 class="content-card-title">
-                        <i class="fas fa-list mr-3 text-purple-600"></i>
-                        Danh sách hóa đơn nhập kho
-                    </h3>
-                    <p class="content-card-subtitle">Tất cả hóa đơn nhập kho được quản lý trong hệ thống</p>
-                </div>
                 <div class="table-wrapper">                    <!-- Responsive Search and Filter Section -->
                     <x-form-section class="mb-6" padding="responsive">
                         <!-- Search Results Summary -->
@@ -88,7 +81,7 @@
                         </x-table-header>
 
                         <!-- Table Body -->
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" id="tableBody">                        @forelse($purchaseOrders as $order)
+                        <tbody class="bg-transparent dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" id="tableBody">                        @forelse($purchaseOrders as $order)
                             <!-- Desktop Table Row -->
                             <tr class="hidden md:table-row hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all duration-200">
                                 <x-table-cell class="hidden md:table-cell">
@@ -173,7 +166,7 @@
 
                             <!-- Mobile Card View -->
                             <x-table-mobile-card class="md:hidden">
-                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-4 mb-4">
+                                <div class="bg-transparent dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-4 mb-4">
                                     <!-- Card Header -->
                                     <div class="flex items-center justify-between mb-3">
                                         <div class="flex items-center">

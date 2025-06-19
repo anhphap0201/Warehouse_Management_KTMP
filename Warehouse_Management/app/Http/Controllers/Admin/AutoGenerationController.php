@@ -31,7 +31,7 @@ class AutoGenerationController extends Controller
             $createdOrders = 0;
             
             // Lấy các cửa hàng ngẫu nhiên
-            $stores = Store::where('status', true)->inRandomOrder()->limit($count)->get();
+            $stores = Store::inRandomOrder()->limit($count)->get();
             
             if ($stores->isEmpty()) {
                 return redirect()->back()->with('error', 'Không có cửa hàng nào để tạo đơn thử nghiệm.');
@@ -104,7 +104,7 @@ class AutoGenerationController extends Controller
             $count = $request->count;
             $createdOrders = 0;
               // Lấy cửa hàng ngẫu nhiên
-            $stores = Store::where('status', true)->inRandomOrder()->limit($count)->get();
+            $stores = Store::inRandomOrder()->limit($count)->get();
             
             if ($stores->isEmpty()) {
                 return redirect()->back()->with('error', 'Không có cửa hàng nào để tạo đơn thử nghiệm.');

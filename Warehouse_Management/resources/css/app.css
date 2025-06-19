@@ -27,21 +27,25 @@ body {
     background-color: #f3f4f6 !important;
 }
 
-/* Override dark mode text colors */
+/* Override dark mode text colors - Less aggressive */
 .text-gray-700, .dark\:text-gray-200, .dark\:text-gray-100 {
-    color: #374151 !important;
+    color: #374151;
 }
 
 .text-gray-600, .dark\:text-gray-300 {
-    color: #4b5563 !important;
+    color: #4b5563;
 }
 
 .text-gray-500, .dark\:text-gray-400 {
-    color: #6b7280 !important;
+    color: #6b7280;
+}
+
+.text-gray-800 {
+    color: #1f2937;
 }
 
 .text-gray-900, .dark\:text-gray-100 {
-    color: #111827 !important;
+    color: #111827;
 }
 
 /* Override dark mode borders */
@@ -58,6 +62,20 @@ input, select, textarea {
     background-color: #ffffff !important;
     color: #111827 !important;
     border-color: #d1d5db !important;
+}
+
+/* Fix text elements background inheritance */
+span.font-semibold {
+    background: inherit !important;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+/* Ensure text elements inherit parent background */
+.notification-item span:not([class*="bg-"]):not([class*="border"]) {
+    background: inherit !important;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -303,39 +321,88 @@ button:hover, .btn:hover {
 }
 
 .flash-success {
-    @apply bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 shadow-sm;
+    background: #f0fdf4 !important;
+    background-color: #f0fdf4 !important;
+    background-image: none !important;
+}
+
+.flash-success * {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Specific fix for warehouse success message */
+div[class*="flash-success"] {
+    background: #f0fdf4 !important;
+    border-color: #22c55e !important;
+}
+
+div[class*="flash-success"] span {
+    background: transparent !important;
+    color: #15803d !important;
 }
 
 .flash-error {
-    @apply bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 rounded-xl p-4 shadow-sm;
+    background: linear-gradient(to right, #fef2f2, #fef2f2) !important;
+    border: 1px solid #ef4444 !important;
+    border-radius: 12px !important;
+    padding: 1rem !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 .flash-content {
-    @apply flex items-center;
+    display: flex !important;
+    align-items: center !important;
 }
 
 .flash-icon {
-    @apply flex-shrink-0 mr-3 text-lg;
+    flex-shrink: 0 !important;
+    margin-right: 0.75rem !important;
+    font-size: 1.125rem !important;
 }
 
 .flash-icon.success {
-    @apply text-green-600;
+    color: #16a34a !important;
 }
 
 .flash-icon.error {
-    @apply text-red-600;
+    color: #dc2626 !important;
 }
 
 .flash-text {
-    @apply font-medium;
+    font-weight: 500 !important;
 }
 
 .flash-text.success {
-    @apply text-green-800;
+    color: #15803d !important;
 }
 
 .flash-text.error {
-    @apply text-red-800;
+    color: #b91c1c !important;
+}
+
+/* Force flash message styling to override any conflicting styles */
+.flash-success, .flash-success * {
+    background-color: #f0fdf4 !important;
+    color: #15803d !important;
+}
+
+.flash-error, .flash-error * {
+    background-color: #fef2f2 !important;
+    color: #b91c1c !important;
+}
+
+/* Prevent any dark mode overrides on flash messages */
+.flash-success .flash-text, 
+.flash-success span:not(.flash-icon) {
+    color: #15803d !important;
+    background: transparent !important;
+}
+
+.flash-error .flash-text,
+.flash-error span:not(.flash-icon) {
+    color: #b91c1c !important;
+    background: transparent !important;
 }
 
 /* Responsive Utilities */
@@ -433,29 +500,63 @@ button:hover, .btn:hover {
     @apply hover:bg-gray-50 transition-colors duration-150;
 }
 
-/* Action buttons in tables */
+/* Action buttons in tables - Fixed alignment */
 .table-actions {
-    @apply text-center;
+    text-align: center !important;
+    vertical-align: middle !important;
+    padding: 1rem 0.75rem !important;
+    min-width: 140px !important;
+    white-space: nowrap !important;
 }
 
 .action-buttons {
-    @apply flex items-center justify-center space-x-2;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    flex-wrap: nowrap !important;
 }
 
 .action-btn {
-    @apply inline-flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200 text-sm;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    font-size: 14px !important;
+    flex-shrink: 0 !important;
 }
 
 .action-btn-view {
-    @apply bg-blue-100 text-blue-600 hover:bg-blue-200;
+    background-color: #dbeafe !important;
+    color: #2563eb !important;
+}
+
+.action-btn-view:hover {
+    background-color: #bfdbfe !important;
+    color: #1d4ed8 !important;
 }
 
 .action-btn-edit {
-    @apply bg-yellow-100 text-yellow-600 hover:bg-yellow-200;
+    background-color: #fef3c7 !important;
+    color: #d97706 !important;
+}
+
+.action-btn-edit:hover {
+    background-color: #fde68a !important;
+    color: #b45309 !important;
 }
 
 .action-btn-delete {
-    @apply bg-red-100 text-red-600 hover:bg-red-200;
+    background-color: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+
+.action-btn-delete:hover {
+    background-color: #fecaca !important;
+    color: #b91c1c !important;
 }
 
 /* Stats cards */
@@ -937,9 +1038,17 @@ button:hover, .btn:hover {
     .sidebar-nav {
         @apply p-4 space-y-2;
     }
-    
-    .sidebar-link {
-        @apply flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg relative overflow-hidden;
+      .sidebar-link {
+        display: flex !important;
+        align-items: center !important;
+        padding: 0.75rem !important;
+        text-decoration: none !important;
+        font-size: 0.875rem !important;
+        font-weight: 500 !important;
+        color: #374151 !important;
+        border-radius: 0.5rem !important;
+        position: relative;
+        overflow: hidden;
         transition: color 0.3s ease;
     }
     
@@ -965,9 +1074,9 @@ button:hover, .btn:hover {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
     }
-    
-    .sidebar-link.active {
-        @apply bg-blue-100 text-blue-700;
+      .sidebar-link.active {
+        background-color: #dbeafe !important;
+        color: #1d4ed8 !important;
         position: relative;
     }
     
@@ -981,20 +1090,30 @@ button:hover, .btn:hover {
         background: linear-gradient(90deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.2) 100%);
         z-index: -1;
         border-radius: 0.5rem;
-    }
-    
-    .sidebar-icon {
-        @apply w-5 h-5 mr-3 text-gray-400;
+    }    .sidebar-icon {
+        width: 16px !important;
+        height: 16px !important;
+        margin-right: 0.5rem !important;
+        color: #9ca3af !important;
+        background: none !important;
+        background-color: transparent !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        vertical-align: middle !important;
         transition: color 0.3s ease, transform 0.3s ease;
     }
-    
-    .sidebar-link:hover .sidebar-icon {
-        color: #1e40af;
+      .sidebar-link:hover .sidebar-icon {
+        color: #1e40af !important;
+        background: none !important;
+        background-color: transparent !important;
         transform: scale(1.1);
     }
     
     .sidebar-link.active .sidebar-icon {
-        @apply text-blue-600;
+        color: #2563eb !important;
+        background: none !important;
+        background-color: transparent !important;
         transform: scale(1.05);
     }
     
@@ -1069,10 +1188,10 @@ button:hover, .btn:hover {
     .sidebar-link:active::after {
         width: 200px;
         height: 200px;
-    }
-
-    /* Enhanced icon animations */
+    }    /* Enhanced icon animations */
     .sidebar-icon {
+        background: none !important;
+        background-color: transparent !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -1969,191 +2088,101 @@ input:focus, select:focus, textarea:focus {
     }
 }
 
-/* Ensure tables fit nicely within their containers */
-.table-responsive table,
-.table-card-container table {
-    width: calc(100% - 2rem) !important;
-    max-width: none !important;
+/* Fix table actions responsive behavior */
+@media (max-width: 768px) {
+    .table-actions {
+        display: flex !important;
+        justify-content: center !important;
+        padding: 0.75rem !important;
+        min-width: 120px !important;
+    }
+    
+    .action-buttons {
+        gap: 0.25rem !important;
+    }
+    
+    .action-btn {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 12px !important;
+    }
 }
 
-/* Status badges and labels padding */
-.inline-flex {
-    padding: 0.375rem 0.75rem !important;
+/* Ensure table cells align properly */
+table td {
+    vertical-align: middle !important;
 }
 
-/* Button padding adjustments */
-.btn {
-    padding: 0.625rem 1.25rem !important;
+/* Fix for x-table component cells */
+.text-center td, 
+td.text-center,
+x-table-cell.text-center {
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
-.btn-sm {
-    padding: 0.5rem 1rem !important;
+/* Ensure purchase orders action buttons are properly styled */
+.touch-target {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-.btn-lg {
-    padding: 0.875rem 1.75rem !important;
+/* Universal table action column fixes */
+table th:last-child,
+table td:last-child {
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
-/* Navigation padding */
-.sidebar-nav {
-    padding: 1.5rem 1rem !important;
+/* Prevent text wrapping in action columns */
+.table-actions,
+td[data-label="Thao tác"],
+td[data-label="Hành động"] {
+    white-space: nowrap !important;
+    text-align: center !important;
 }
 
-.sidebar-link {
-    padding: 0.875rem 1.25rem !important;
-    margin-bottom: 0.25rem !important;
+/* Ensure buttons don't break layout */
+.action-btn form {
+    display: inline-block !important;
+    margin: 0 !important;
 }
 
-/* Global override for remaining blue colors to neutral */
-.text-blue-600,
-.dark\:text-blue-400 {
-    color: #4b5563 !important; /* gray-600 */
+.inline-block {
+    display: inline-block !important;
 }
 
-.text-blue-800,
-.dark\:text-blue-300 {
-    color: #374151 !important; /* gray-700 */
+/* Force remove background from all sidebar icons and fix alignment */
+.sidebar-icon,
+i.sidebar-icon,
+.fas.sidebar-icon {
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 0.5rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    line-height: 1 !important;
 }
 
-.text-blue-900,
-.dark\:text-blue-200 {
-    color: #1f2937 !important; /* gray-800 */
-}
-
-.bg-blue-100,
-.dark\:bg-blue-900 {
-    background-color: #f3f4f6 !important; /* gray-100 */
-}
-
-.bg-blue-50,
-.dark\:bg-blue-900\/50 {
-    background-color: #f9fafb !important; /* gray-50 */
-}
-
-.border-blue-300,
-.dark\:border-blue-600 {
-    border-color: #d1d5db !important; /* gray-300 */
-}
-
-.border-blue-200,
-.dark\:border-blue-700 {
-    border-color: #e5e7eb !important; /* gray-200 */
-}
-
-/* Hover states */
-.hover\:text-blue-900:hover,
-.dark\:hover\:text-blue-300:hover {
-    color: #111827 !important; /* gray-900 */
-}
-
-.hover\:bg-blue-50:hover,
-.dark\:hover\:bg-blue-900:hover {
-    background-color: #f3f4f6 !important; /* gray-100 */
-}
-
-/* Focus and ring colors */
-.focus\:ring-blue-500:focus {
-    --tw-ring-color: #6b7280 !important; /* gray-500 */
-}
-
-.focus\:border-blue-500:focus {
-    border-color: #6b7280 !important; /* gray-500 */
-}
-
-/* Icons and text neutral color override */
-.fas.text-blue-600,
-i.text-blue-600 {
-    color: #4b5563 !important; /* gray-600 */
-}
-
-/* Email and phone links neutral color */
-a.text-blue-600 {
-    color: #4b5563 !important; /* gray-600 */
-}
-
-a.text-blue-600:hover {
-    color: #374151 !important; /* gray-700 */
-}
-
-/* SVG icons neutral color */
-svg.text-blue-600 {
-    color: #4b5563 !important; /* gray-600 */
-}
-
-/* Override all blue gradients to neutral */
-.bg-gradient-to-r.from-blue-500.to-blue-600,
-.bg-gradient-to-r.from-blue-600.to-blue-700,
-.bg-gradient-to-br.from-blue-500.to-blue-600 {
-    background: linear-gradient(to right, #6b7280, #4b5563) !important; /* gray-500 to gray-600 */
-}
-
-.hover\:from-blue-700.hover\:to-blue-800:hover,
-.hover\:from-blue-600.hover\:to-blue-700:hover {
-    background: linear-gradient(to right, #374151, #1f2937) !important; /* gray-700 to gray-800 */
-}
-
-.bg-gradient-to-r.from-blue-100.to-blue-200 {
-    background: linear-gradient(to right, #f3f4f6, #e5e7eb) !important; /* gray-100 to gray-200 */
-}
-
-.dark\:from-blue-800.dark\:to-blue-900 {
-    background: linear-gradient(to right, #374151, #1f2937) !important; /* gray-700 to gray-800 for dark mode */
-}
-
-/* Notification headers and card headers */
-.bg-gradient-to-r.from-blue-500.to-blue-600 {
-    background: linear-gradient(to right, #6b7280, #4b5563) !important; /* gray-500 to gray-600 */
-}
-
-/* Dashboard Layout CSS */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.actions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.stats-card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    border: 1px solid #e5e7eb;
-    transition: all 0.2s ease;
-}
-
-.stats-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
-}
-
-.content-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    border: 1px solid #e5e7eb;
-    transition: all 0.2s ease;
-}
-
-.content-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
-}
-
-.content-card-header {
-    background: #f9fafb;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.card-body {
-    padding: 1.5rem;
+/* Ensure icons stay transparent in all states */
+.sidebar-link:hover .sidebar-icon,
+.sidebar-link.active .sidebar-icon,
+.sidebar-link:focus .sidebar-icon {
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
 }

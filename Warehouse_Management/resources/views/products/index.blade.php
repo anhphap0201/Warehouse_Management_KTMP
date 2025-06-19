@@ -41,13 +41,7 @@
             @endif            @if($products->count() > 0)
                 <!-- Products Table -->
                 <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="content-card-title">
-                            <i class="fas fa-list mr-3 text-blue-600"></i>
-                            Danh sách sản phẩm ({{ $products->total() }})
-                        </h3>
-                        <p class="content-card-subtitle">Tất cả sản phẩm được quản lý trong hệ thống</p>
-                    </div>
+
                     <div class="table-wrapper">
                         <!-- Table View -->
                         <table class="table-modern">
@@ -120,7 +114,7 @@
                                             </a>
                                             <form action="{{ route('products.destroy', $product) }}" 
                                                   method="POST" 
-                                                  style="display: inline;"
+                                                  class="inline-block"
                                                   onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
                                                 @csrf
                                                 @method('DELETE')

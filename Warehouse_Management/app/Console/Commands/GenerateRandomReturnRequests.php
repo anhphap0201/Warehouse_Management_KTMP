@@ -109,8 +109,7 @@ class GenerateRandomReturnRequests extends Command
     {
         $storeIds = $this->option('stores');
         
-        $query = Store::where('status', true)
-            ->whereHas('inventory', function ($q) {
+        $query = Store::whereHas('inventory', function ($q) {
                 $q->where('quantity', '>', 0);
             })
             ->with(['inventory' => function ($q) {

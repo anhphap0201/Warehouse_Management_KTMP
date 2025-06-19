@@ -45,13 +45,7 @@
             @if($categories->count() > 0)
                 <!-- Categories Table -->
                 <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="content-card-title">
-                            <i class="fas fa-list mr-3 text-green-600"></i>
-                            Danh sách danh mục ({{ $categories->count() }})
-                        </h3>
-                        <p class="content-card-subtitle">Tất cả danh mục sản phẩm được quản lý trong hệ thống</p>
-                    </div>
+                    
                     <div class="table-wrapper">
                         <table class="table-modern">
                         <thead>
@@ -99,7 +93,7 @@
                                             </a>
                                             <form action="{{ route('categories.destroy', $category) }}" 
                                                   method="POST" 
-                                                  style="display: inline;"
+                                                  class="inline-block"
                                                   onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')">
                                                 @csrf
                                                 @method('DELETE')

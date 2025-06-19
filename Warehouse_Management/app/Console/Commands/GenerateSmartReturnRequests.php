@@ -37,8 +37,7 @@ class GenerateSmartReturnRequests extends Command
         
         $this->info('🧠 Bắt đầu phân tích thông minh để tạo yêu cầu trả hàng...');
         
-        $stores = Store::where('status', true)
-            ->whereHas('inventory', function ($q) {
+        $stores = Store::whereHas('inventory', function ($q) {
                 $q->where('quantity', '>', 0);
             })
             ->with(['inventory' => function ($q) {

@@ -43,7 +43,7 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        $stores = Store::where('status', true)->get();
+        $stores = Store::all();
         $products = Product::all();
         
         return view('notifications.create', compact('stores', 'products'));

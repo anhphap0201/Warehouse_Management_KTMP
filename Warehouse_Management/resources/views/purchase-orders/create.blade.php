@@ -497,11 +497,19 @@ function initializeProductSearch(index) {
     const globalLoading = document.getElementById('globalProductLoading');
     const globalResults = document.getElementById('globalProductResults');
     
+    // Kiểm tra xem các element có tồn tại không
+    if (!searchInput || !hiddenInput || !globalDropdown) {
+        console.error('Product search elements not found for index:', index);
+        return;
+    }
+    
     let currentSearchIndex = null;
     
     searchInput.addEventListener('input', function() {
         const query = this.value.trim();
         currentSearchIndex = index;
+        
+        console.log('Product search input:', query, 'for index:', index);
         
         if (query.length < 1) {
             globalDropdown.classList.add('hidden');
@@ -517,8 +525,10 @@ function initializeProductSearch(index) {
     
     searchInput.addEventListener('focus', function() {
         currentSearchIndex = index;
-        if (this.value.trim().length >= 1) {
-            searchProducts(this.value.trim(), index);
+        const query = this.value.trim();
+        console.log('Product search focus:', query, 'for index:', index);
+        if (query.length >= 1) {
+            searchProducts(query, index);
         }
     });
       searchInput.addEventListener('blur', function() {
@@ -530,6 +540,8 @@ function initializeProductSearch(index) {
         }, 200);
     });
       async function searchProducts(query, index) {
+        console.log('Searching products with query:', query, 'for index:', index);
+        
         // Định vị dropdown theo vị trí input
         const rect = searchInput.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -544,7 +556,10 @@ function initializeProductSearch(index) {
         globalDropdown.classList.remove('hidden');
         
         try {
-            const response = await fetch(`/api/products/search?q=${encodeURIComponent(query)}`, {
+            const url = `/api/products/search?q=${encodeURIComponent(query)}`;
+            console.log('Fetching URL:', url);
+            
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
@@ -554,11 +569,14 @@ function initializeProductSearch(index) {
                 credentials: 'same-origin'
             });
             
+            console.log('Response status:', response.status);
+            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
             const data = await response.json();
+            console.log('Products found:', data);
             
             globalLoading.classList.add('hidden');
             
@@ -570,14 +588,14 @@ function initializeProductSearch(index) {
                          onclick="selectProduct(${product.id}, '${product.name}', ${index})"
                          onmousedown="event.preventDefault()">
                         <div class="font-medium text-gray-900 dark:text-gray-100">${product.name}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Mã: ${product.code || 'N/A'}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Mã: ${product.code || product.sku || 'N/A'}</div>
                     </div>
                 `).join('');
             }
         } catch (error) {
             console.error('Product search error:', error);
             globalLoading.classList.add('hidden');
-            globalResults.innerHTML = '<div class="px-4 py-2 text-red-500 text-sm">Lỗi khi tìm kiếm</div>';
+            globalResults.innerHTML = '<div class="px-4 py-2 text-red-500 text-sm">Lỗi khi tìm kiếm: ' + error.message + '</div>';
         }
     }
     
@@ -623,7 +641,15 @@ function addItem(oldItem = null) {
         </tr>
     `;
     
-    document.getElementById('itemsBody').insertAdjacentHTML('beforeend', itemHtml);      // Nếu dữ liệu oldItem tồn tại, điền vào trường tìm kiếm sản phẩm
+    document.getElementById('itemsBody').insertAdjacentHTML('beforeend', itemHtml);
+    
+    // Khởi tạo tìm kiếm sản phẩm cho hàng này NGAY SAU KHI HTML được thêm
+    console.log('Initializing product search for index:', itemIndex);
+    setTimeout(() => {
+        initializeProductSearch(itemIndex);
+    }, 100);
+    
+    // Nếu dữ liệu oldItem tồn tại, điền vào trường tìm kiếm sản phẩm
     if (oldItem && oldItem.product_id) {
         const productSearchInput = document.getElementById(`product_search_${itemIndex}`);
         const productIdInput = document.getElementById(`product_id_${itemIndex}`);

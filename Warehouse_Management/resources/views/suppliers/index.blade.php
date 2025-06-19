@@ -44,13 +44,6 @@
 
             <!-- Suppliers Table -->
             <div class="table-container">
-                <div class="table-header">
-                    <h3 class="content-card-title">
-                        <i class="fas fa-list mr-3 text-orange-600"></i>
-                        Danh sách nhà cung cấp ({{ $suppliers->count() }})
-                    </h3>
-                    <p class="content-card-subtitle">Tất cả nhà cung cấp được quản lý trong hệ thống</p>
-                </div>
                 <div class="table-wrapper">
                     <!-- Suppliers Table -->
                     <x-table 
@@ -110,7 +103,7 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400" data-label="Ngày tạo">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm date-text" data-label="Ngày tạo">
                                     {{ $supplier->created_at->format('d/m/Y H:i') }}
                                 </td>
                                 <td class="table-actions" data-label="Thao tác">

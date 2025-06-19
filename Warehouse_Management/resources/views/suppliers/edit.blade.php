@@ -155,12 +155,12 @@
                             </h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                 <div class="info-item">
-                                    <span class="text-gray-500 dark:text-gray-400">Ngày tạo:</span>
-                                    <span class="ml-2 font-medium">{{ $supplier->created_at->format('d/m/Y H:i') }}</span>
+                                    <span class="date-label">Ngày tạo:</span>
+                                    <span class="ml-2 created-date">{{ $supplier->created_at->format('d/m/Y H:i') }}</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="text-gray-500 dark:text-gray-400">Cập nhật lần cuối:</span>
-                                    <span class="ml-2 font-medium">{{ $supplier->updated_at->format('d/m/Y H:i') }}</span>
+                                    <span class="date-label">Cập nhật lần cuối:</span>
+                                    <span class="ml-2 updated-date">{{ $supplier->updated_at->format('d/m/Y H:i') }}</span>
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="w-9/12 mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-transparent dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-semibold">Thêm nhà cung cấp mới</h3>

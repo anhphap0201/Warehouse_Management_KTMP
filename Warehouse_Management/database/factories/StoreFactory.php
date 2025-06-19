@@ -98,43 +98,12 @@ class StoreFactory extends Factory
 
         return [
             'name' => $storeType . ' ' . $district,
-            'code' => $storeCode,
             'location' => $district . ', ' . $cityName,
-            'address' => $address,
-            'phone' => '09' . $this->faker->numberBetween(10000000, 99999999),
-            'email' => $email,
-            'manager' => $managerName,
-            'type' => $storeType,
-            'area' => $storeTypesWithArea[$storeType] ?? $this->faker->numberBetween(100, 300),
-            'capacity' => $capacity,
-            'description' => 'Cửa hàng ' . $storeType . ' tại ' . $district . ', chuyên phục vụ khu vực ' . $cityName,
-            'operating_hours' => json_encode($operatingHours),
-            'status' => $this->faker->boolean(85), // 85% cửa hàng hoạt động
             'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
             'updated_at' => function (array $attributes) {
                 return $this->faker->dateTimeBetween($attributes['created_at'], 'now');
             },
         ];
-    }
-
-    /**
-     * Indicate that the store is active.
-     */
-    public function active(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => true,
-        ]);
-    }
-
-    /**
-     * Indicate that the store is inactive.
-     */
-    public function inactive(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => false,
-        ]);
     }
 
     /**

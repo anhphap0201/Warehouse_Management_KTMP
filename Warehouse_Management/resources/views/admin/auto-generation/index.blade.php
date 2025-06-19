@@ -30,7 +30,7 @@
         <!-- Simple Test Order Creation -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Create Test Return Order -->
-            <div class="bg-white rounded-lg shadow-lg">
+            <div class="bg-transparent rounded-lg shadow-lg border border-gray-200">
                 <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-t-lg">
                     <h3 class="text-xl font-semibold flex items-center">
                         <i class="fas fa-undo mr-3"></i>
@@ -55,7 +55,7 @@
 
                     <div class="mt-6">
                         <button type="submit" 
-                                class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
+                                class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 border border-red-600">
                             <i class="fas fa-plus mr-2"></i>
                             Tạo đơn trả hàng thử nghiệm
                         </button>
@@ -64,7 +64,7 @@
             </div>
 
             <!-- Create Test Shipment Order -->
-            <div class="bg-white rounded-lg shadow-lg">
+            <div class="bg-transparent rounded-lg shadow-lg border border-gray-200">
                 <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-t-lg">
                     <h3 class="text-xl font-semibold flex items-center">
                         <i class="fas fa-truck mr-3"></i>
@@ -99,7 +99,7 @@
         </div>
 
         <!-- Info Section -->
-        <div class="mt-8 bg-white rounded-lg shadow-lg">
+        <div class="mt-8 bg-transparent rounded-lg shadow-lg border border-gray-200">
             <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-t-lg">
                 <h2 class="text-xl font-semibold flex items-center">
                     <i class="fas fa-info-circle mr-3"></i>

@@ -94,7 +94,7 @@
                                 </div>
                                 <input type="text" 
                                        id="searchInput" 
-                                       class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                       class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-transparent dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                        placeholder="Tìm kiếm sản phẩm theo tên hoặc SKU...">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                     <div id="searchLoader" class="hidden">
@@ -126,7 +126,7 @@
                                         <th>Tồn kho tối đa</th>
                                         <th>Trạng thái</th>
                                     </tr>
-                                </thead>                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                </thead>                                <tbody class="bg-transparent dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                     @foreach($store->inventory as $inventory)
                                         <tr class="inventory-row"
                                             data-product-name="{{ strtolower($inventory->product->name ?? '') }}"
