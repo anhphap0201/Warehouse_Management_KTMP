@@ -72,27 +72,9 @@
                                         <p class="form-error">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div>
-                                    <label for="supplier_phone" class="form-label">Số điện thoại</label>
-                                    <input type="text" 
-                                           name="supplier_phone" 
-                                           id="supplier_phone" 
-                                           class="form-input @error('supplier_phone') is-invalid @enderror" 
-                                           value="{{ old('supplier_phone') }}">
-                                    @error('supplier_phone')
-                                        <p class="form-error">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                                
                             </div>
                             <div class="space-y-6">
-                                <div>
-                                    <label class="form-label">
-                                        Số hóa đơn
-                                    </label>
-                                    <div class="form-static-text">
-                                        Sẽ được tự động tạo khi lưu hóa đơn
-                                    </div>
-                                </div>
                                 <div>
                                     <label for="supplier_name" class="form-label">
                                         Tên nhà cung cấp <span class="text-red-500">*</span>
@@ -118,7 +100,19 @@
                                     @error('supplier_name')
                                         <p class="form-error">{{ $message }}</p>
                                     @enderror
-                                </div>                                <div id="supplier_address_field" style="display: none;">
+                                </div>
+                                    <div>
+                                        <label for="supplier_phone" class="form-label">Số điện thoại</label>
+                                        <input type="text" 
+                                            name="supplier_phone" 
+                                            id="supplier_phone" 
+                                            class="form-input @error('supplier_phone') is-invalid @enderror" 
+                                            value="{{ old('supplier_phone') }}">
+                                        @error('supplier_phone')
+                                            <p class="form-error">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div id="supplier_address_field" style="display: none;">
                                     <label for="supplier_address" class="form-label">Địa chỉ nhà cung cấp</label>
                                     <textarea name="supplier_address" 
                                               id="supplier_address" 

@@ -10,7 +10,7 @@
 }
 
 body {
-    background-color: #f9fafb !important;
+    background-color: #f3f4f6 !important;
     color: #374151 !important;
 }
 
@@ -20,11 +20,11 @@ body {
 }
 
 .bg-gray-50, .dark\:bg-gray-700, .dark\:bg-slate-700 {
-    background-color: #f9fafb !important;
+    background-color: #f3f4f6 !important;
 }
 
 .bg-gray-100, .dark\:bg-slate-600 {
-    background-color: #f3f4f6 !important;
+    background-color: #e5e7eb !important;
 }
 
 /* Override dark mode text colors - Less aggressive */
@@ -85,14 +85,18 @@ input:focus, select:focus, textarea:focus {
     ring-color: #3b82f6 !important;
 }
 
-/* Override table styles */
-table, tbody, tr, td {
+/* Override table styles - but not for alternating row tables */
+table:not(.table-modern):not(.table-striped):not(.min-w-full), 
+table:not(.table-modern):not(.table-striped):not(.min-w-full) tbody, 
+table:not(.table-modern):not(.table-striped):not(.min-w-full) tr, 
+table:not(.table-modern):not(.table-striped):not(.min-w-full) td {
     background-color: #ffffff !important;
     color: #111827 !important;
 }
 
-tr:hover {
-    background-color: #f9fafb !important;
+/* Only apply hover to non-alternating tables */
+table:not(.table-modern):not(.table-striped):not(.min-w-full) tr:hover {
+    background-color: #f3f4f6 !important;
 }
 
 /* Override card styles */
@@ -103,7 +107,7 @@ tr:hover {
 }
 
 .card-header {
-    background-color: #f9fafb !important;
+    background-color: #f3f4f6 !important;
     border-color: #e5e7eb !important;
 }
 
@@ -155,10 +159,9 @@ button:hover, .btn:hover {
     --error-50: #fef2f2;
     --error-500: #ef4444;
     --error-600: #dc2626;
-    
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
+      --gray-50: #f3f4f6;
+    --gray-100: #e5e7eb;
+    --gray-200: #d1d5db;
     --gray-300: #d1d5db;
     --gray-400: #9ca3af;
     --gray-500: #6b7280;
@@ -863,86 +866,9 @@ div[class*="flash-success"] span {
     }
     
     .table-modern td {
-        @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
-    }
-    
+        @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;    }    
     .table-modern tbody tr {
         @apply hover:bg-gray-100 transition-colors duration-200;
-    }
-    
-    /* Enhanced table row hover effects */
-    table tbody tr,
-    .table tbody tr,
-    tbody tr {
-        transition: all 0.2s ease-in-out;
-    }
-    
-    table tbody tr:hover,
-    .table tbody tr:hover,
-    tbody tr:hover {
-        background-color: #e5e7eb !important; /* Darker gray for better visibility */
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transform: translateY(-1px);
-    }
-    
-    /* Enhanced darker table row hover effects */
-    table tbody tr,
-    .table tbody tr,
-    tbody tr {
-        transition: all 0.2s ease-in-out;
-    }
-    
-    table tbody tr:hover,
-    .table tbody tr:hover,
-    tbody tr:hover {
-        background-color: #e5e7eb !important; /* Darker gray for better visibility */
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transform: translateY(-1px);
-    }
-    
-    /* Specific dark hover effects for table types */
-    .hover\:bg-gray-50:hover {
-        background-color: #d1d5db !important; /* Even darker */
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    
-    .hover\:bg-gradient-to-r:hover {
-        background: linear-gradient(90deg, #d1d5db 0%, #9ca3af 30%, #d1d5db 100%) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* Special dark hover for gradient rows */
-    tr.hover\:bg-gradient-to-r:hover {
-        background: linear-gradient(90deg, #d1d5db 0%, #9ca3af 50%, #d1d5db 100%) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        border-left: 3px solid #3b82f6;
-    }
-    
-    /* Enhanced hover for modern table */
-    .table-modern tbody tr:hover {
-        background-color: #d1d5db !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transform: translateY(-2px);
-        border-radius: 4px;
-    }
-    
-    /* Mobile responsive darker hover */
-    @media (max-width: 768px) {
-        table tbody tr:hover,
-        .table tbody tr:hover,
-        tbody tr:hover {
-            background-color: #e5e7eb !important;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            transform: none; /* Remove transform on mobile for better touch experience */
-        }
-    }
-    
-    /* Dark theme compatibility (override) */
-    .dark table tbody tr:hover,
-    .dark .table tbody tr:hover,
-    .dark tbody tr:hover {
-        background-color: #374151 !important;
-        color: #f9fafb !important;
     }
     
     /* Action buttons hover enhancement when row is hovered */

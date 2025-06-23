@@ -22,6 +22,10 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
+        <!-- Custom Styling -->
+        <link rel="stylesheet" href="{{ asset('css/custom-tables.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/custom-background.css') }}">
+        
         <!-- Force Light Mode Override -->
         <link rel="stylesheet" href="{{ asset('css/light-mode-force.css') }}">
         

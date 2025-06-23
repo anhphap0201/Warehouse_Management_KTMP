@@ -4,11 +4,11 @@
 <div class="table-responsive table-card-container shadow-md sm:rounded-lg">
     {{-- Desktop Table --}}
     <table class="table-desktop w-full text-sm text-left text-gray-700">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+        <thead class="text-xs text-black uppercase bg-pink-100">
             <tr>
                 @if($headers)
                     @foreach($headers as $header)
-                        <th scope="col" class="px-3 py-3 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col" class="px-3 py-3 sm:px-4 sm:py-3 text-left text-xs font-medium text-black uppercase tracking-wider border-b border-black">
                             {{ $header }}
                         </th>
                     @endforeach

@@ -84,45 +84,18 @@ class Store extends Model
     }
 
     /**
-     * Receive stock from warehouse
+     * Check if store has low stock items
      */
-    public function receiveStock(int $productId, int $quantity): bool
+    public function hasLowStockItems(): bool
     {
-        // Logic to receive stock from warehouse
-        // This would typically involve updating store inventory
-        // and creating appropriate stock movement records
-        
-        // For now, we'll create a stock movement record
-        StockMovement::create([
-            'product_id' => $productId,
-            'warehouse_id' => 1, // Default warehouse, should be configurable
-            'type' => 'OUT',
-            'quantity' => $quantity,
-            'date' => now(),
-            'reference_note' => "Transfer to store: {$this->name}"
-        ]);
-        
-        return true;
+        return $this->inventory()->whereRaw('quantity <= min_stock')->exists();
     }
 
     /**
-     * Return stock to warehouse
+     * Check if store has overstocked items
      */
-    public function returnStock(int $productId, int $quantity): bool
+    public function hasOverstockedItems(): bool
     {
-        // Logic to return stock to warehouse
-        // This would typically involve updating store inventory
-        // and creating appropriate stock movement records
-        
-        StockMovement::create([
-            'product_id' => $productId,
-            'warehouse_id' => 1, // Default warehouse, should be configurable
-            'type' => 'IN',
-            'quantity' => $quantity,
-            'date' => now(),
-            'reference_note' => "Return from store: {$this->name}"
-        ]);
-        
-        return true;
+        return $this->inventory()->whereRaw('quantity >= max_stock')->exists();
     }
 }

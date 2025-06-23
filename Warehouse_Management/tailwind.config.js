@@ -9,6 +9,10 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
+    safelist: [
+        'table-modern',
+        'bg-gray-100'
+    ],
 
     theme: {
         extend: {

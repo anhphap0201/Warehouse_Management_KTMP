@@ -73,15 +73,6 @@ class Inventory extends Model
     }
 
     /**
-     * Adjust inventory quantity
-     */
-    public function adjustQuantity(int $delta): void
-    {
-        $this->quantity += $delta;
-        $this->save();
-    }
-
-    /**
      * Get current quantity
      */
     public function getQuantity(): int
@@ -90,27 +81,18 @@ class Inventory extends Model
     }
 
     /**
-     * Transfer stock to store
+     * Check if inventory is low (below 10)
      */
-    public function transferToStore(int $quantity): bool
+    public function isLowStock(int $threshold = 10): bool
     {
-        if ($this->quantity >= $quantity) {
-            $this->quantity -= $quantity;
-            $this->save();
-            
-            // Record stock movement
-            StockMovement::create([
-                'product_id' => $this->product_id,
-                'warehouse_id' => $this->warehouse_id,
-                'type' => 'OUT',
-                'quantity' => $quantity,
-                'date' => now(),
-                'reference_note' => 'Transfer to store'
-            ]);
-            
-            return true;
-        }
-        
-        return false;
+        return $this->quantity < $threshold;
+    }
+
+    /**
+     * Check if inventory is sufficient for requirement
+     */
+    public function isSufficient(int $requiredQuantity): bool
+    {
+        return $this->quantity >= $requiredQuantity;
     }
 }

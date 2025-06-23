@@ -5,11 +5,6 @@
                 {{ __('Chi tiết hóa đơn nhập kho') }} #{{ $purchaseOrder->invoice_number }}
             </h2>
             <div class="flex space-x-2">
-                <a href="{{ route('purchase-orders.edit', $purchaseOrder) }}" 
-                   class="btn btn-primary btn-sm">
-                    <i class="fas fa-edit mr-2"></i>
-                    Chỉnh sửa
-                </a>
                 <a href="{{ route('purchase-orders.index') }}" 
                    class="btn btn-secondary btn-sm">
                     <i class="fas fa-arrow-left mr-2"></i>

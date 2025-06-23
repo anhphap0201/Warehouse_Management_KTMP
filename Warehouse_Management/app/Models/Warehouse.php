@@ -31,9 +31,6 @@ class Warehouse extends Model
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * Validation rules for Warehouse model
-     */
     public static function rules()
     {
         return [
@@ -42,9 +39,6 @@ class Warehouse extends Model
         ];
     }
 
-    /**
-     * Validation rules for updating Warehouse
-     */
     public static function updateRules($id)
     {
         return [
@@ -53,33 +47,24 @@ class Warehouse extends Model
         ];
     }
 
-    /**
-     * Get the inventory records for the warehouse.
-     */
+
     public function inventory(): HasMany
     {
         return $this->hasMany(Inventory::class);
     }
 
-    /**
-     * Get the stock movements for the warehouse.
-     */
+
     public function stockMovements(): HasMany
     {
         return $this->hasMany(StockMovement::class);
     }
 
-    /**
-     * Get all products in this warehouse
-     */
+
     public function getProducts()
     {
         return $this->inventory()->with('product')->get()->pluck('product');
     }
 
-    /**
-     * Get inventories for this warehouse
-     */
     public function getInventories()
     {
         return $this->inventory;

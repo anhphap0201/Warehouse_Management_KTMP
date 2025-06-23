@@ -1,0 +1,224 @@
+/* Custom Table Styling - Table Modern with Alternating Row Colors */
+.table-modern,
+.min-w-full,
+.table-striped,
+.table-desktop {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+/* Header styling - must be early in CSS for priority */
+.table-modern thead,
+.table-desktop thead,
+.min-w-full thead,
+.table-striped thead {
+    background-color: #fce7f3 !important; /* Light pink background */
+    border-bottom: 2px solid #374151;
+}
+
+.table-modern thead th,
+.table-desktop thead th,
+.min-w-full thead th,
+.table-striped thead th {
+    font-weight: 600 !important;
+    color: #000000 !important; /* Black text */
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    padding: 16px !important;
+    border-bottom: 1px solid #000000 !important; /* Black border for header */
+    background-color: #fce7f3 !important; /* Ensure pink background */
+}
+
+/* Force header styling with highest specificity */
+html body table thead,
+html body .table-container table thead,
+html body .table-wrapper table thead,
+html body .table-responsive table thead {
+    background-color: #fce7f3 !important;
+    background: #fce7f3 !important;
+}
+
+html body table thead th,
+html body .table-container table thead th,
+html body .table-wrapper table thead th,
+html body .table-responsive table thead th {
+    background-color: #fce7f3 !important;
+    background: #fce7f3 !important;
+    color: #000000 !important;
+}
+
+.table-modern td,
+.min-w-full td,
+.table-striped td,
+.table-desktop td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table-modern tbody tr,
+.min-w-full tbody tr,
+.table-striped tbody tr,
+.table-desktop tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+/* Alternating row colors for all table types */
+.table-modern tbody tr:nth-child(odd),
+.min-w-full tbody tr:nth-child(odd),
+.table-striped tbody tr:nth-child(odd),
+.table-desktop tbody tr:nth-child(odd) {
+    background-color: #f9fafb !important;
+}
+
+.table-modern tbody tr:nth-child(even),
+.min-w-full tbody tr:nth-child(even),
+.table-striped tbody tr:nth-child(even),
+.table-desktop tbody tr:nth-child(even) {
+    background-color: #ffffff !important;
+}
+
+.table-modern tbody tr:hover,
+.min-w-full tbody tr:hover,
+.table-striped tbody tr:hover,
+.table-desktop tbody tr:hover {
+    background-color: #f3f4f6 !important;
+}
+
+/* Force alternating row colors with highest specificity */
+html body table.table-modern tbody tr:nth-child(odd),
+html body .table-container table.table-modern tbody tr:nth-child(odd),
+html body .table-wrapper table.table-modern tbody tr:nth-child(odd) {
+    background-color: #f9fafb !important;
+    background: #f9fafb !important;
+}
+
+html body table.table-modern tbody tr:nth-child(even),
+html body .table-container table.table-modern tbody tr:nth-child(even),
+html body .table-wrapper table.table-modern tbody tr:nth-child(even) {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+/* Hover effects with highest specificity */
+html body table.table-modern tbody tr:nth-child(odd):hover,
+html body .table-container table.table-modern tbody tr:nth-child(odd):hover,
+html body .table-wrapper table.table-modern tbody tr:nth-child(odd):hover {
+    background-color: #e5e7eb !important;
+    background: #e5e7eb !important;
+}
+
+html body table.table-modern tbody tr:nth-child(even):hover,
+html body .table-container table.table-modern tbody tr:nth-child(even):hover,
+html body .table-wrapper table.table-modern tbody tr:nth-child(even):hover {
+    background-color: #f3f4f6 !important;
+    background: #f3f4f6 !important;
+}
+
+/* Table Modern Responsive Design */
+@media (max-width: 768px) {
+    .table-modern {
+        font-size: 14px;
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap;
+    }
+    
+    .table-modern thead {
+        display: none;
+    }
+    
+    .table-modern th {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .table-modern td {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .table-modern tbody tr {
+        display: block;
+        border: 1px solid #e5e7eb;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        padding: 8px;
+    }
+}
+
+/* Ensure proper styling for table containers */
+.table-modern,
+.min-w-full,
+table.w-full {
+    table-layout: auto;
+    border-spacing: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+}
+
+.table-modern th,
+.table-modern td {
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* Header styling with better contrast */
+/* This section is moved to top of file for better priority */
+
+/* Add black border lines between rows */
+.table-modern td,
+.min-w-full td,
+.table-striped td,
+.table-desktop td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #000000 !important; /* Black border between rows */
+}
+
+/* Dark mode compatibility for header */
+@media (prefers-color-scheme: dark) {
+    .table-modern thead,
+    .table-desktop thead,
+    .min-w-full thead,
+    .table-striped thead,
+    html body table thead,
+    html body .table-container table thead,
+    html body .table-wrapper table thead,
+    html body .table-responsive table thead {
+        background-color: #fce7f3 !important; /* Keep pink background in dark mode */
+        background: #fce7f3 !important;
+    }
+    
+    .table-modern thead th,
+    .table-desktop thead th,
+    .min-w-full thead th,
+    .table-striped thead th,
+    html body table thead th,
+    html body .table-container table thead th,
+    html body .table-wrapper table thead th,
+    html body .table-responsive table thead th {
+        color: #000000 !important; /* Keep black text in dark mode */
+        background-color: #fce7f3 !important;
+        background: #fce7f3 !important;
+        border-bottom: 1px solid #000000;
+    }
+    
+    /* Dark mode table body */
+    .table-modern,
+    .min-w-full,
+    .table-striped,
+    .table-desktop {
+        background-color: #111827;
+        color: #f9fafb;
+    }
+    
+    .table-modern td,
+    .min-w-full td,
+    .table-striped td,
+    .table-desktop td {
+        color: #f9fafb;
+        border-bottom: 1px solid #374151 !important; /* Lighter border in dark mode */
+    }
+}

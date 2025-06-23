@@ -128,8 +128,7 @@
                                     </tr>
                                 </thead>                                <tbody class="bg-transparent dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                     @foreach($store->inventory as $inventory)
-                                        <tr class="inventory-row"
-                                            data-product-name="{{ strtolower($inventory->product->name ?? '') }}"
+                                        <tr data-product-name="{{ strtolower($inventory->product->name ?? '') }}"
                                             data-sku="{{ strtolower($inventory->product->sku ?? '') }}">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
