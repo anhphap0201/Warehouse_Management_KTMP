@@ -307,7 +307,7 @@ button:hover, .btn:hover {
 
 /* Standardized Buttons */
 .btn-primary-standard {
-    @apply inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105;
+    @apply inline-flex items-center px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105;
 }
 
 .btn-primary-gradient {
@@ -635,7 +635,7 @@ div[class*="flash-success"] span {
 
 /* Notification styles */
 .notification-badge {
-    @apply absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full min-w-[1.25rem] h-5;
+    @apply absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-black bg-red-500 rounded-full min-w-[1.25rem] h-5;
 }
 
 /* Print styles */
@@ -703,10 +703,30 @@ div[class*="flash-success"] span {
     /* Modern Buttons */
     .btn {
         @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+    }    .btn-primary {
+        background-color: #0ea5e9;
+        color: white;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        cursor: pointer;
     }
     
-    .btn-primary {
-        @apply btn bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm hover:shadow-md;
+    .btn-primary:hover {
+        background-color: #0284c7;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-primary:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.5);
     }
     
     /* Enhanced "Add New" button styling - Neutral colors */
@@ -828,7 +848,7 @@ div[class*="flash-success"] span {
     
     /* Modern Form Elements */
     .form-input {
-        @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm;
+        @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
     }
     
     .form-select {
@@ -1241,17 +1261,15 @@ div[class*="flash-success"] span {
     /* Improved notification badge animation */
     #notificationDot {
         animation: notificationPulse 2s infinite;
-    }
-
-    @keyframes notificationPulse {
+    }    @keyframes notificationPulse {
         0% {
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
         }
         70% {
-            box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
         }
         100% {
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
         }
     }
 }
@@ -1383,7 +1401,7 @@ div[class*="flash-success"] span {
             margin-bottom: 1rem;
             padding: 1rem;
             background: white;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            box-shadow: 0 1px 3px 0 rgb(0, 0, 0 / 0.1);
         }
         
         .dark .table-mobile-card {
@@ -1656,8 +1674,7 @@ div[class*="flash-success"] span {
         display: flex;
         align-items: center;
     }
-    
-    /* Notification badge improvements */
+      /* Notification badge improvements */
     .notification-badge {
         position: absolute;
         top: -8px;
@@ -1669,8 +1686,8 @@ div[class*="flash-success"] span {
         justify-content: center;
         font-size: 11px;
         font-weight: bold;
-        color: white;
-        background-color: #dc2626;
+        color: black;
+        background-color: #ef4444;
         border-radius: 50%;
         border: 2px solid white;
         z-index: 10;
@@ -1693,8 +1710,7 @@ div[class*="flash-success"] span {
         min-width: 44px;
         min-height: 44px;
     }
-    
-    .notification-badge-enhanced {
+      .notification-badge-enhanced {
         position: absolute;
         top: -2px;
         right: -2px;
@@ -1706,11 +1722,11 @@ div[class*="flash-success"] span {
         font-size: 0.75rem;
         font-weight: 700;
         line-height: 1;
-        color: white;
-        background: linear-gradient(135deg, #dc2626, #991b1b);
+        color: black;
+        background: #ef4444;
         border-radius: 9999px;
         border: 2px solid white;
-        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
         z-index: 20;
         transform: scale(1);
         transition: all 0.2s ease-in-out;
@@ -2111,4 +2127,640 @@ i.sidebar-icon,
     background: none !important;
     background-color: transparent !important;
     background-image: none !important;
+}
+
+/* Force sky blue color for all primary buttons with high specificity */
+.btn.btn-primary,
+.btn-primary-standard,
+button.btn-primary-standard {
+    background-color: #0ea5e9 !important; /* sky-500 */
+    background: #0ea5e9 !important;
+    color: white !important;
+}
+
+.btn.btn-primary:hover,
+.btn-primary-standard:hover,
+button.btn-primary-standard:hover {
+    background-color: #0284c7 !important; /* sky-600 */
+    background: #0284c7 !important;
+}
+
+/* Also update the focus ring */
+.btn.btn-primary:focus,
+.btn-primary-standard:focus,
+button.btn-primary-standard:focus {
+    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.5) !important;
+    outline: none !important;
+}
+
+/* Fix cho các badge và tags bị ghi đè bởi table CSS */
+.inline-flex.items-center span.rounded-full,
+.badge, 
+.tag-badge,
+span.bg-blue-200,
+span.bg-gray-200, 
+span.bg-purple-100,
+span.bg-green-100,
+span.bg-red-100,
+span.bg-yellow-100 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    border-radius: 9999px !important;
+    white-space: nowrap !important;
+    border: none !important;
+    min-width: 1.5rem !important;
+    height: auto !important;
+    vertical-align: baseline !important;
+}
+
+/* Đảm bảo màu nền và chữ cho từng loại badge */
+span.bg-blue-200 {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+}
+
+span.bg-gray-200 {
+    background-color: #e5e7eb !important;
+    color: #374151 !important;
+}
+
+span.bg-purple-100 {
+    background-color: #ede9fe !important;
+    color: #7c3aed !important;
+}
+
+span.bg-green-100 {
+    background-color: #dcfce7 !important;
+    color: #16a34a !important;
+}
+
+span.bg-red-100 {
+    background-color: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+
+span.bg-yellow-100 {
+    background-color: #fef3c7 !important;
+    color: #d97706 !important;
+}
+
+/* Dark mode cho badges */
+.dark span.bg-blue-800 {
+    background-color: #1e40af !important;
+    color: #dbeafe !important;
+}
+
+.dark span.bg-gray-600 {
+    background-color: #4b5563 !important;
+    color: #e5e7eb !important;
+}
+
+.dark span.bg-purple-900 {
+    background-color: #581c87 !important;
+    color: #ede9fe !important;
+}
+
+.dark span.bg-green-900 {
+    background-color: #14532d !important;
+    color: #dcfce7 !important;
+}
+
+.dark span.bg-red-900 {
+    background-color: #7f1d1d !important;
+    color: #fee2e2 !important;
+}
+
+/* Đảm bảo badges trong flex container hoạt động đúng */
+.flex.flex-wrap.gap-2 .inline-flex.items-center,
+.inline-flex.items-center {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+/* Fix cho warehouse cards bị ghi đè CSS */
+.group.bg-transparent {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+.group.bg-transparent:hover {
+    background-color: #eff6ff !important; /* bg-blue-50 */
+    background: #eff6ff !important;
+}
+
+/* Đảm bảo các phần tử trong card hiển thị đúng */
+.group .bg-gradient-to-r {
+    background: linear-gradient(to right, #3b82f6, #2563eb) !important; /* blue-500 to blue-600 */
+}
+
+.group .rounded-2xl {
+    border-radius: 1rem !important;
+}
+
+.group .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.group:hover .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.group .border-gray-200 {
+    border-color: #e5e7eb !important;
+}
+
+.group:hover .border-blue-300 {
+    border-color: #93c5fd !important;
+}
+
+/* Fix cho card header gradient */
+.group .bg-gradient-to-r.from-blue-500.to-blue-600 {
+    background: linear-gradient(to right, #3b82f6, #2563eb) !important;
+    color: white !important;
+}
+
+/* Fix cho card body */
+.group .bg-transparent.group-hover\:bg-blue-50 {
+    background-color: transparent !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.group:hover .group-hover\:bg-blue-50 {
+    background-color: #eff6ff !important; /* bg-blue-50 */
+}
+
+/* Fix cho stats boxes */
+.group .bg-blue-50.group-hover\:bg-blue-100 {
+    background-color: #eff6ff !important; /* bg-blue-50 */
+    transition: background-color 0.3s ease !important;
+}
+
+.group:hover .bg-blue-50.group-hover\:bg-blue-100 {
+    background-color: #dbeafe !important; /* bg-blue-100 */
+}
+
+.group .bg-purple-50.group-hover\:bg-purple-100 {
+    background-color: #faf5ff !important; /* bg-purple-50 */
+    transition: background-color 0.3s ease !important;
+}
+
+.group:hover .bg-purple-50.group-hover\:bg-purple-100 {
+    background-color: #ede9fe !important; /* bg-purple-100 */
+}
+
+/* Fix cho transform và scale */
+.group.transform.hover\:scale-105 {
+    transform: scale(1) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.group.transform.hover\:scale-105:hover {
+    transform: scale(1.05) !important;
+}
+
+/* Đảm bảo overflow hoạt động */
+.group.overflow-hidden {
+    overflow: hidden !important;
+}
+
+/* Fix cụ thể cho warehouse cards với độ ưu tiên cao */
+div.content-grid div.group.bg-transparent,
+.content-grid .group.bg-transparent,
+.page-content .group.bg-transparent {
+    background-color: white !important;
+    background: white !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+div.content-grid div.group.bg-transparent:hover,
+.content-grid .group.bg-transparent:hover,
+.page-content .group.bg-transparent:hover {
+    background-color: #eff6ff !important; /* bg-blue-50 */
+    background: #eff6ff !important;
+    border-color: #93c5fd !important; /* border-blue-300 */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    transform: scale(1.05) !important;
+}
+
+/* Force gradient header */
+div.content-grid div.group .bg-gradient-to-r,
+.content-grid .group .bg-gradient-to-r,
+.page-content .group .bg-gradient-to-r {
+    background: linear-gradient(to right, #3b82f6, #2563eb) !important;
+    color: white !important;
+    padding: 1.5rem !important;
+}
+
+/* Force stats boxes colors */
+div.content-grid div.group .bg-blue-50,
+.content-grid .group .bg-blue-50,
+.page-content .group .bg-blue-50 {
+    background-color: #eff6ff !important;
+    border-radius: 0.5rem !important;
+    padding: 0.75rem !important;
+    text-align: center !important;
+    transition: background-color 0.3s ease !important;
+}
+
+div.content-grid div.group:hover .bg-blue-50,
+.content-grid .group:hover .bg-blue-50,
+.page-content .group:hover .bg-blue-50 {
+    background-color: #dbeafe !important; /* bg-blue-100 */
+}
+
+div.content-grid div.group .bg-purple-50,
+.content-grid .group .bg-purple-50,
+.page-content .group .bg-purple-50 {
+    background-color: #faf5ff !important;
+    border-radius: 0.5rem !important;
+    padding: 0.75rem !important;
+    text-align: center !important;
+    transition: background-color 0.3s ease !important;
+}
+
+div.content-grid div.group:hover .bg-purple-50,
+.content-grid .group:hover .bg-purple-50,
+.page-content .group:hover .bg-purple-50 {
+    background-color: #ede9fe !important; /* bg-purple-100 */
+}
+
+/* ==============================================
+   NOTIFICATION PAGE STYLES
+   ============================================== */
+
+/* Filter tabs styling */
+.filter-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-tab-active {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    transform: translateY(-1px);
+}
+
+.filter-tab-inactive {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+
+.filter-tab-inactive:hover {
+    background: #f3f4f6;
+    color: #374151;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.badge-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: currentColor;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 20px;
+    height: 20px;
+}
+
+.filter-tab-inactive .badge-count {
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+/* Notification row styling */
+.notification-row {
+    cursor: pointer;
+}
+
+.notification-row:hover {
+    background-color: #f8fafc !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.notification-unread {
+    background: linear-gradient(90deg, #eff6ff 0%, #f0f9ff 100%);
+    border-left: 4px solid #0ea5e9;
+}
+
+.notification-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    transition: all 0.3s ease;
+}
+
+.notification-icon-unread {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border: 2px solid #93c5fd;
+}
+
+.notification-icon-read {
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+}
+
+.notification-pulse {
+    display: flex;
+    height: 8px;
+    width: 8px;
+    margin-left: 8px;
+}
+
+/* Empty state styling */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-state-content {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.empty-state-icon {
+    margin: 0 auto 24px;
+    height: 80px;
+    width: 80px;
+    color: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-state-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.empty-state-description {
+    font-size: 16px;
+    color: #6b7280;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.empty-state-action {
+    margin-top: 24px;
+}
+
+/* Modal styling */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 20px;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) .modal-container {
+    transform: scale(1);
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e5e7eb;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.modal-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 24px;
+}
+
+.modal-icon-success {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    color: #059669;
+    border: 2px solid #10b981;
+}
+
+.modal-icon-danger {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #dc2626;
+    border: 2px solid #ef4444;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.modal-description {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.modal-form {
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+}
+
+.btn-modal {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-modal-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-modal-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.btn-modal-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-modal-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.btn-modal-cancel {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+
+.btn-modal-cancel:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+/* Fix cho notification page clickable elements */
+.filter-tab,
+.btn-primary-standard,
+.action-btn,
+.table-modern a,
+.table-modern button {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Đảm bảo table actions không bị che phủ */
+.table-actions {
+    position: relative;
+    z-index: 2;
+}
+
+.action-buttons {
+    position: relative;
+    z-index: 3;
+}
+
+/* Fix hover cho notification rows */
+.notification-row {
+    position: relative;
+    z-index: 1;
+}
+
+.notification-row:hover {
+    z-index: 2;
+}
+
+/* Đảm bảo page header có thể click */
+.page-header-standard,
+.page-actions {
+    position: relative;
+    z-index: 1;
+}
+
+/* Đảm bảo filter tabs container có thể click */
+.filter-tab {
+    cursor: pointer;
+    user-select: none;
+}
+
+.filter-tab:hover {
+    z-index: 2;
+}
+
+/* Debug class để kiểm tra clickable elements */
+.debug-clickable {
+    outline: 2px solid red !important;
+    background-color: rgba(255, 0, 0, 0.1) !important;
 }

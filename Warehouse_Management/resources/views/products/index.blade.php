@@ -40,12 +40,19 @@
                 </div>
             @endif            @if($products->count() > 0)
                 <!-- Products Table -->
-                <div class="table-container">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                    <div class="p-6">
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                                <i class="fas fa-box mr-2 text-blue-600"></i>
+                                Danh sách sản phẩm
+                            </h3>
+                        </div>
 
-                    <div class="table-wrapper">
-                        <!-- Table View -->
-                        <table class="table-modern">
-                        <thead>
+                        <div class="table-wrapper">
+                            <!-- Table View -->
+                            <table class="table-modern">
+                            <thead>
                             <tr>
                                 <th>Sản phẩm</th>
                                 <th>SKU</th>
@@ -139,6 +146,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                        </div>
                         
                         <!-- Grid View (Hidden by default) -->
                         <div id="gridView" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">                            @foreach($products as $product)
@@ -184,6 +192,7 @@
                                 </div>
                             @endforeach
                         </div>
+                    </div>
                 </div>
 
                 <!-- Pagination -->

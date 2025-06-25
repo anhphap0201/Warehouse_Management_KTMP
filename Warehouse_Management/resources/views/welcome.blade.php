@@ -62,7 +62,7 @@
 
         <footer class="w-full py-8 mt-auto text-center lg:max-w-4xl max-w-[335px]">
             <p class="text-sm text-[#706f6c] dark:text-[#A1A09A]">
-                &copy; {{ date('Y') }} {{ config('app.name', 'Hệ thống Quản lý Kho hàng') }}. Bảo lưu mọi quyền.
+                &copy; {{ date('Y') }} {{ config('app.name', 'Hệ thống Quản lý Kho hàng') }}.
             </p>
         </footer>
     </body>

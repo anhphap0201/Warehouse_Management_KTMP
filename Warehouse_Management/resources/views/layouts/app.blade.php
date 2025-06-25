@@ -90,10 +90,10 @@
                             {{ __('app.import_goods') }}
                         </a>
                         
-                        <a href="{{ route('admin.auto-generation.index') }}" 
-                           class="sidebar-link {{ request()->routeIs('admin.auto-generation.*') ? 'active' : '' }}">
-                            <i class="fas fa-magic sidebar-icon"></i>
-                            {{ __('app.auto_generation') }}
+                        <a href="{{ route('return-orders.index') }}" 
+                           class="sidebar-link {{ request()->routeIs('return-orders.*') ? 'active' : '' }}">
+                            <i class="fas fa-undo sidebar-icon"></i>
+                            {{ __('Đơn trả hàng') }}
                         </a>
                     </nav>
                 </div>
@@ -119,7 +119,7 @@
                                 <i class="fas fa-bell w-5 h-5"></i>
                                 
                                 <!-- Notification dot -->
-                                <span id="notificationDot" class="absolute -top-0.5 -right-0.5 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full min-w-[1.25rem] h-5 shadow-lg {{ $unreadNotificationsCount > 0 ? 'animate-pulse' : 'hidden' }}">
+                                <span id="notificationDot" class="absolute -top-0.5 -right-0.5 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-black bg-red-500 rounded-full min-w-[1.25rem] h-5 shadow-lg {{ $unreadNotificationsCount > 0 ? 'animate-pulse' : 'hidden' }}">
                                     <span id="notificationCount">{{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}</span>
                                 </span>
                             </a>
@@ -273,11 +273,11 @@
                                 {{ __('app.import_goods') }}
                             </a>
                             
-                            <a href="{{ route('admin.auto-generation.index') }}" 
-                               class="sidebar-link {{ request()->routeIs('admin.auto-generation.*') ? 'active' : '' }}"
+                            <a href="{{ route('return-orders.index') }}" 
+                               class="sidebar-link {{ request()->routeIs('return-orders.*') ? 'active' : '' }}"
                                @click="open = false">
-                                <i class="fas fa-magic sidebar-icon"></i>
-                                {{ __('app.auto_generation') }}
+                                <i class="fas fa-undo sidebar-icon"></i>
+                                {{ __('Đơn trả hàng') }}
                             </a>
                         </nav>
                     </div>
@@ -340,30 +340,8 @@
 
         // Xử lý click điều hướng để đảm bảo điều hướng đúng cách
         function enhanceNavigation() {
-            const navLinks = document.querySelectorAll('a[href]:not([href^="#"]):not([href^="javascript:"]):not([onclick])');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Chỉ tiếp tục nếu đây là liên kết điều hướng
-                    if (!this.href || this.href.startsWith('#') || this.href.startsWith('javascript:')) {
-                        return;
-                    }
-                    
-                    // Ngăn chặn nhiều lần click nhanh
-                    if (this.hasAttribute('data-navigating')) {
-                        e.preventDefault();
-                        return;
-                    }
-                    
-                    // Đánh dấu đang điều hướng
-                    this.setAttribute('data-navigating', 'true');
-                    
-                    // Xóa flag sau một thời gian ngắn
-                    setTimeout(() => {
-                        this.removeAttribute('data-navigating');
-                    }, 1000);
-                }, { passive: false });
-            });
+            // Không cần thêm event listener nữa, sẽ dùng event delegation
+            console.log('Navigation enhancement loaded');
         }
 
         // Cập nhật số lượng thông báo khi tải trang và mỗi 30 giây
@@ -372,6 +350,31 @@
             enhanceNavigation();
             setInterval(updateNotificationCount, 30000); // 30 giây
         });
+
+        // Improved navigation handler - chỉ ngăn chặn double click thực sự
+        let lastClickTime = 0;
+        let lastClickTarget = null;
+        
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a[href]');
+            
+            if (link && !link.hasAttribute('onclick') && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
+                const now = Date.now();
+                
+                // Chỉ ngăn chặn nếu click vào cùng link trong vòng 300ms
+                if (lastClickTarget === link && (now - lastClickTime) < 300) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Cập nhật thông tin click cuối
+                lastClickTime = now;
+                lastClickTarget = link;
+                
+                // Đảm bảo link hoạt động bình thường
+                console.log('Navigating to:', link.href);
+            }
+        }, { capture: false }); // Không sử dụng capture để tránh conflict với Alpine
         </script>
         
         @stack('scripts')

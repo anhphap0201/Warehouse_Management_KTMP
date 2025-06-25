@@ -37,8 +37,8 @@
                         {{ __('app.import_goods') }}
                     </x-nav-link>
                     
-                    <x-nav-link :href="route('admin.auto-generation.index')" :active="request()->routeIs('admin.auto-generation.*')">
-                        {{ __('app.auto_generation') }}
+                    <x-nav-link :href="route('return-orders.index')" :active="request()->routeIs('return-orders.*')">
+                        {{ __('Đơn trả hàng') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                         </svg>
                         
                         <!-- Notification dot -->
-                        <span id="notificationDot" class="absolute -top-0.5 -right-0.5 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full min-w-[1.25rem] h-5 shadow-lg {{ $unreadNotificationsCount > 0 ? 'animate-pulse' : 'hidden' }}">
+                        <span id="notificationDot" class="absolute -top-0.5 -right-0.5 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-black bg-red-500 rounded-full min-w-[1.25rem] h-5 shadow-lg {{ $unreadNotificationsCount > 0 ? 'animate-pulse' : 'hidden' }}">
                             <span id="notificationCount">{{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}</span>
                         </span>
                     </a>
@@ -133,8 +133,9 @@
             <x-responsive-nav-link :href="route('purchase-orders.index')" :active="request()->routeIs('purchase-orders.*')">
                 {{ __('app.import_goods') }}
             </x-responsive-nav-link>
-              <x-responsive-nav-link :href="route('admin.auto-generation.index')" :active="request()->routeIs('admin.auto-generation.*')">
-                {{ __('app.auto_generation') }}
+            
+            <x-responsive-nav-link :href="route('return-orders.index')" :active="request()->routeIs('return-orders.*')">
+                {{ __('Đơn trả hàng') }}
             </x-responsive-nav-link>
             </div>
             
@@ -152,7 +153,7 @@
                     <div class="flex items-center justify-between">
                         <span>{{ __('app.notifications') }}</span>
                         <!-- Mobile Notification Dot -->
-                        <span id="mobileNotificationDot" class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full min-w-[1.25rem] h-5 shadow-lg {{ $unreadNotificationsCount > 0 ? 'animate-pulse' : 'hidden' }}">
+                        <span id="mobileNotificationDot" class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-black bg-red-500 rounded-full min-w-[1.25rem] h-5 shadow-lg {{ $unreadNotificationsCount > 0 ? 'animate-pulse' : 'hidden' }}">
                             <span id="mobileNotificationCount">{{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}</span>
                         </span>
                     </div>

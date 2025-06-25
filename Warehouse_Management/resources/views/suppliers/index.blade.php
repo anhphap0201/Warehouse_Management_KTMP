@@ -43,11 +43,19 @@
             @endif
 
             <!-- Suppliers Table -->
-            <div class="table-container">
-                <div class="table-wrapper">
-                    <!-- Suppliers Table -->
-                    <x-table 
-                        :headers="['Nhà cung cấp', 'Thông tin liên hệ', 'Trạng thái', 'Ngày tạo', 'Thao tác']"
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="p-6">
+                    <div class="section-divider">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                            <i class="fas fa-truck mr-2 text-green-600"></i>
+                            Danh sách nhà cung cấp
+                        </h3>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <!-- Suppliers Table -->
+                        <x-table 
+                            :headers="['Nhà cung cấp', 'Thông tin liên hệ', 'Trạng thái', 'Ngày tạo', 'Thao tác']"
                         :mobileCards="true"
                         class="min-w-full">
                         @forelse($suppliers as $supplier)
@@ -157,10 +165,11 @@
 
                     <!-- Pagination -->
                     @if($suppliers->hasPages())
-                        <div class="mt-6">
+                        <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                             {{ $suppliers->links() }}
                         </div>
                     @endif
+                    </div>
                 </div>
             </div>
         </div>

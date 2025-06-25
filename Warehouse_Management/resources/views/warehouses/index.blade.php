@@ -30,93 +30,105 @@
                         <span class="flash-text success">{{ session('success') }}</span>
                     </div>
                 </div>
-            @endif
+            @endif            <!-- Warehouses Table -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="p-6">
+                    <div class="section-divider">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                            <i class="fas fa-warehouse mr-2 text-green-600"></i>
+                            Danh sách kho hàng
+                        </h3>
+                    </div>
 
-            <!-- Warehouses Grid -->
-            <div class="content-card">
-
-                <div class="content-card-body">                    @if($warehouses->count() > 0)                        <div class="content-grid">
-                            @foreach($warehouses as $warehouse)
-                                <div class="group bg-transparent hover:bg-blue-50 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 hover:border-blue-300 overflow-hidden">
-                                    <!-- Card Header -->
-                                    <div class="p-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-                                        <div class="flex items-center justify-between">
+                    <div class="table-wrapper">
+                        @if($warehouses->count() > 0)
+                            <!-- Table View -->
+                            <table class="table-modern">
+                            <thead>
+                                <tr>
+                                    <th>Tên Kho</th>
+                                    <th>Vị Trí</th>
+                                    <th>Sản Phẩm</th>
+                                    <th>Tổng SL</th>
+                                    <th>Ngày tạo</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($warehouses as $warehouse)
+                                    <tr>
+                                        <td>
                                             <div class="flex items-center">
-                                                <div class="bg-transparent bg-opacity-20 p-3 rounded-full mr-4 border border-white border-opacity-30">
-                                                    <i class="fas fa-warehouse text-xl"></i>
+                                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <i class="fas fa-warehouse text-blue-600"></i>
                                                 </div>
                                                 <div>
-                                                    <h3 class="text-xl font-bold">{{ $warehouse->name }}</h3>
-                                                    <p class="text-blue-100 text-sm">ID: #{{ $warehouse->id }}</p>
+                                                    <div class="font-medium text-gray-900">{{ $warehouse->name }}</div>
+                                                    <div class="text-sm text-gray-500">ID: #{{ $warehouse->id }}</div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>                                    <!-- Card Body -->
-                                    <div class="p-6 bg-transparent group-hover:bg-blue-50 transition-colors duration-300">
-                                        @if($warehouse->location)
-                                            <div class="flex items-center text-gray-600 mb-4">
-                                                <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>
-                                                <span class="text-sm">{{ $warehouse->location }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="text-sm text-gray-900">
+                                                @if($warehouse->location)
+                                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                                    {{ $warehouse->location }}
+                                                @else
+                                                    <span class="text-gray-400">Chưa có</span>
+                                                @endif
                                             </div>
-                                        @endif
-
-                                        <!-- Warehouse Stats -->
-                                        <div class="grid grid-cols-2 gap-4 mb-6">
-                                            <div class="bg-blue-50 group-hover:bg-blue-100 rounded-lg p-3 text-center transition-colors duration-300">
-                                                <div class="text-2xl font-bold text-blue-600">
-                                                    {{ $warehouse->inventory->count() }}
-                                                </div>
-                                                <div class="text-xs text-blue-600 font-medium">
-                                                    Sản phẩm
-                                                </div>
+                                        </td>
+                                        <td>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                {{ $warehouse->inventory->count() }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                {{ $warehouse->inventory->sum('quantity') }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="text-sm text-gray-500">
+                                                <div>{{ $warehouse->created_at->format('d/m/Y') }}</div>
+                                                <div class="text-xs text-gray-400">{{ $warehouse->created_at->format('H:i') }}</div>
                                             </div>
-                                            <div class="bg-purple-50 group-hover:bg-purple-100 rounded-lg p-3 text-center transition-colors duration-300">
-                                                <div class="text-2xl font-bold text-purple-600">
-                                                    {{ $warehouse->inventory->sum('quantity') }}
-                                                </div>
-                                                <div class="text-xs text-purple-600 font-medium">
-                                                    Tổng số lượng
-                                                </div>
+                                        </td>                                        <td class="table-actions">
+                                            <div class="action-buttons">
+                                                <a href="{{ route('warehouses.show', $warehouse) }}" 
+                                                   class="action-btn action-btn-view"
+                                                   title="Xem chi tiết">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('warehouses.edit', $warehouse) }}" 
+                                                   class="action-btn action-btn-edit"
+                                                   title="Chỉnh sửa">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('warehouses.destroy', $warehouse) }}" 
+                                                      method="POST" 
+                                                      class="inline-block"
+                                                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa kho này không?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" 
+                                                            class="action-btn action-btn-delete"
+                                                            title="Xóa">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
-                                        </div>
-
-                                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-4">
-                                            <i class="fas fa-calendar-alt mr-2"></i>
-                                            Tạo: {{ $warehouse->created_at->format('d/m/Y H:i') }}
-                                        </div>
-
-                                        <!-- Action Buttons -->
-                                        <div class="flex space-x-2">
-                                            <a href="{{ route('warehouses.show', $warehouse) }}" 
-                                               class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
-                                                <i class="fas fa-eye mr-2"></i>
-                                                Xem
-                                            </a>
-                                            <a href="{{ route('warehouses.edit', $warehouse) }}" 
-                                               class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
-                                                <i class="fas fa-edit mr-2"></i>
-                                                Sửa
-                                            </a>
-                                            <form method="POST" action="{{ route('warehouses.destroy', $warehouse) }}" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" 
-                                                        class="inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
-                                                        onclick="return confirm('Bạn có chắc chắn muốn xóa kho này không?')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>                        </table>
 
                         <!-- Pagination -->
-                        <div class="mt-8">
-                            {{ $warehouses->links() }}
-                        </div>
-                    @else
+                        @if($warehouses->hasPages())
+                            <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                {{ $warehouses->links() }}
+                            </div>
+                        @endif                    @else
                         <div class="text-center py-16">
                             <div class="mx-auto h-20 w-20 text-gray-400 mb-6">
                                 <i class="fas fa-warehouse text-6xl"></i>
@@ -132,6 +144,7 @@
                             </a>
                         </div>
                     @endif
+                    </div>
                 </div>
             </div>
         </div>

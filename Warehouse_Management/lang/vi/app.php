@@ -322,7 +322,6 @@ return [
     'priority' => 'Ưu tiên',
 
     // Additional navigation items
-    'auto_generation' => 'Tự động tạo',
     'purchase_orders' => 'Nhập hàng',
     'import_goods' => 'Nhập hàng',
 
