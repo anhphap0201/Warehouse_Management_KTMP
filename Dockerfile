@@ -7,13 +7,11 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    unzip \
-    curl \
-    git \
-    nodejs \
-    npm
+    zip unzip curl git \
+    nodejs npm \
+    libmysqlclient-dev
 
+RUN docker-php-ext-install pdo pdo_mysql
 # Cài Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
