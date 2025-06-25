@@ -100,6 +100,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'update'])->name('purchase-orders.update');
     Route::delete('/purchase-orders/{purchaseOrder}', [PurchaseOrderController::class, 'destroy'])->name('purchase-orders.destroy');
     
+    
+    // Đơn trả hàng - CRUD đầy đủ
+    Route::get('/return-orders', [App\Http\Controllers\ReturnOrderController::class, 'index'])->name('return-orders.index');
+    Route::get('/return-orders/create', [App\Http\Controllers\ReturnOrderController::class, 'create'])->name('return-orders.create');
+    Route::post('/return-orders', [App\Http\Controllers\ReturnOrderController::class, 'store'])->name('return-orders.store');
+    Route::get('/return-orders/{returnOrder}', [App\Http\Controllers\ReturnOrderController::class, 'show'])->name('return-orders.show');
+    Route::post('/return-orders/{returnOrder}/process', [App\Http\Controllers\ReturnOrderController::class, 'process'])->name('return-orders.process');
+    Route::post('/return-orders/{returnOrder}/cancel', [App\Http\Controllers\ReturnOrderController::class, 'cancel'])->name('return-orders.cancel');
+    Route::delete('/return-orders/{returnOrder}', [App\Http\Controllers\ReturnOrderController::class, 'destroy'])->name('return-orders.destroy');
+    
     // Hoạt động tồn kho và vận hành kho của cửa hàng
     Route::get('/stores/{store}/receive', [StoreController::class, 'showReceiveForm'])->name('stores.receive.form');
     Route::post('/stores/{store}/receive', [StoreController::class, 'receiveStock'])->name('stores.receive');
@@ -114,6 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
     Route::post('/notifications/{notification}/approve', [NotificationController::class, 'approve'])->name('notifications.approve');
     Route::post('/notifications/{notification}/reject', [NotificationController::class, 'reject'])->name('notifications.reject');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     
     // Các route API cho thông báo
     Route::get('/api/notifications/unread-count', [NotificationController::class, 'getUnreadCount'])->name('api.notifications.unread-count');
@@ -126,14 +137,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/warehouses/search', [PurchaseOrderController::class, 'searchWarehouses'])->name('api.warehouses.search'); 
     Route::get('/api/warehouses/{warehouse}', [WarehouseController::class, 'getWarehouse'])->name('api.warehouses.get');
     Route::get('/api/suppliers/search', [SupplierController::class, 'search'])->name('api.suppliers.search');
-    
-    // Các route tự động tạo
-    Route::prefix('admin/auto-generation')->name('admin.auto-generation.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\AutoGenerationController::class, 'index'])->name('index');
-        
-        // Tạo đơn hàng thử nghiệm (đơn giản hóa)
-        Route::post('/test-return', [App\Http\Controllers\Admin\AutoGenerationController::class, 'createTestReturnOrders'])->name('test-return');
-        Route::post('/test-shipment', [App\Http\Controllers\Admin\AutoGenerationController::class, 'createTestShipmentOrders'])->name('test-shipment');
-    });
 });
 require __DIR__.'/auth.php';
